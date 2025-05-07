@@ -1,0 +1,43 @@
+{
+  "name": "server",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "test": "vitest --run",
+    "eval": "evalite",
+    "eval:watch": "evalite watch",
+    "check-types": "tsc --noEmit",
+    "compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile server",
+    "dev": "bun run --hot src/index.ts",
+    "start": "bun run dist/src/index.js",
+    "db:local": "turso dev --db-file local.db",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^1.3.21",
+    "@hono/trpc-server": "^0.3.4",
+    "@libsql/client": "^0.14.0",
+    "@trpc/client": "^11.0.0",
+    "@trpc/server": "^11.0.0",
+    "ai": "^4.3.13",
+    "better-auth": "^1.2.7",
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.38.4",
+    "hono": "^4.7.6",
+    "ts-pattern": "^5.7.0",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.6",
+    "drizzle-kit": "^0.30.5",
+    "evalite": "^0.11.3",
+    "tsc-alias": "^1.8.11",
+    "typescript": "^5.8.2",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.1.3"
+  }
+}
