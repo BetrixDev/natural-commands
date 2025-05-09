@@ -1,6 +1,9 @@
 import { generateCommandFromPrompt } from "@/ai/ai";
 import { evalite } from "evalite";
-import { outputIsOneOfExpected, outputMatchesExpectedRegex } from "./scorers";
+import {
+  outputIsOneOfExpected,
+  outputMatchesExpectedRegex,
+} from "../../../utils/scorers";
 
 evalite("teleport command for self", {
   data: () => [
