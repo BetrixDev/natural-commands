@@ -1,6 +1,6 @@
+import { entity, rotation, vec3 } from "@/ai/schemas";
 import { tool } from "ai";
 import { z } from "zod";
-import { entity, rotation, vec3 } from "@/ai/schemas";
 
 export const teleportCommandTool = tool({
   description:

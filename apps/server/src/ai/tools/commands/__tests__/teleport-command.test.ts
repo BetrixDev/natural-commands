@@ -6,7 +6,7 @@ describe("teleport command", () => {
       {
         destination: { x: 100, y: 100, z: 100 },
       },
-      { messages: [], toolCallId: "" }
+      { messages: [], toolCallId: "" },
     );
 
     expect(command).toBe("teleport 100 100 100");
@@ -17,7 +17,7 @@ describe("teleport command", () => {
       {
         destination: "Player1",
       },
-      { messages: [], toolCallId: "" }
+      { messages: [], toolCallId: "" },
     );
 
     expect(command).toBe("teleport Player1");
@@ -29,7 +29,7 @@ describe("teleport command", () => {
         targets: "@a",
         destination: { x: 100, y: 100, z: 100 },
       },
-      { messages: [], toolCallId: "" }
+      { messages: [], toolCallId: "" },
     );
 
     expect(command).toBe("teleport @a 100 100 100");
@@ -41,7 +41,7 @@ describe("teleport command", () => {
         targets: "@a",
         destination: "Player1",
       },
-      { messages: [], toolCallId: "" }
+      { messages: [], toolCallId: "" },
     );
 
     expect(command).toBe("teleport @a Player1");
@@ -54,7 +54,7 @@ describe("teleport command", () => {
         destination: { x: 100, y: 100, z: 100 },
         rotation: { yaw: 90, pitch: 0 },
       },
-      { messages: [], toolCallId: "" }
+      { messages: [], toolCallId: "" },
     );
 
     expect(command).toBe("teleport @a 100 100 100 90 0");
@@ -67,7 +67,7 @@ describe("teleport command", () => {
         destination: { x: 100, y: 100, z: 100 },
         facingLocation: { x: 200, y: 200, z: 200 },
       },
-      { messages: [], toolCallId: "" }
+      { messages: [], toolCallId: "" },
     );
 
     expect(command).toBe("teleport @a 100 100 100 facing 200 200 200");
@@ -80,7 +80,7 @@ describe("teleport command", () => {
         destination: { x: 100, y: 100, z: 100 },
         facingEntity: "Player1",
       },
-      { messages: [], toolCallId: "" }
+      { messages: [], toolCallId: "" },
     );
 
     expect(command).toBe("teleport @a 100 100 100 facing entity Player1");

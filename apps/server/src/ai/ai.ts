@@ -11,7 +11,7 @@ type CommandGenerationPrompt = {
 };
 
 export async function generateCommandFromPrompt(
-  prompt: CommandGenerationPrompt
+  prompt: CommandGenerationPrompt,
 ) {
   const minecraftVersion = prompt.minecraftVersion ?? "1.21.1";
   const playerName = prompt.playerName ?? "N/A";

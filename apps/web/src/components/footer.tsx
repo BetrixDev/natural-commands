@@ -1,0 +1,155 @@
+import {
+  BotMessageSquareIcon,
+  Disc as Discord,
+  Github,
+  Twitter,
+} from "lucide-react";
+import { Container } from "./container";
+
+export const Footer = () => {
+  return (
+    <footer className="border-gray-800 border-t bg-gray-900 py-12">
+      <Container>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+          <div className="md:col-span-1">
+            <div className="mb-4 flex items-center space-x-2">
+              <BotMessageSquareIcon className="h-8 w-8 text-emerald-400" />
+              <span className="font-bold text-xl">Natural Commands</span>
+            </div>
+            <p className="mb-4 text-gray-400">
+              Transforming Minecraft commands through the power of AI.
+            </p>
+            <div className="flex space-x-4">
+              <a
+                href="https://github.com/BetrixDev/natural-commands"
+                className="text-gray-400 transition-colors hover:text-emerald-400"
+              >
+                <Github size={20} />
+              </a>
+              <a
+                href="https://x.com/BetrixDev"
+                className="text-gray-400 transition-colors hover:text-emerald-400"
+              >
+                <Twitter size={20} />
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="mb-4 font-semibold text-lg">Resources</h3>
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="https://docs.commandcraft.ai"
+                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                >
+                  Documentation
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://docs.commandcraft.ai/commands"
+                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                >
+                  Command References
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://docs.commandcraft.ai/tutorials"
+                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                >
+                  Tutorials
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://docs.commandcraft.ai/api"
+                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                >
+                  API
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="mb-4 font-semibold text-lg">Community</h3>
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="https://discord.gg/natural-commands"
+                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                >
+                  Discord Server
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/natural-commands/natural-commands"
+                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                >
+                  Forum
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/natural-commands/natural-commands"
+                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                >
+                  Github
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/natural-commands/natural-commands/issues"
+                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                >
+                  Bug Reports
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="mb-4 font-semibold text-lg">Legal</h3>
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="https://docs.commandcraft.ai/legal/terms-of-service"
+                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                >
+                  Terms of Service
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://docs.commandcraft.ai/legal/privacy-policy"
+                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                >
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://docs.commandcraft.ai/legal/license"
+                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                >
+                  License
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-12 border-gray-800 border-t pt-8 text-center text-gray-500 text-sm">
+          <p>© {new Date().getFullYear()} Natural Commands.</p>
+          <p className="mt-2">
+            Not affiliated with Mojang Studios or Microsoft. Minecraft is a
+            trademark of Mojang Studios.
+          </p>
+        </div>
+      </Container>
+    </footer>
+  );
+};

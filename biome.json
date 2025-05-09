@@ -33,6 +33,9 @@
       "correctness": {
         "useExhaustiveDependencies": "info"
       },
+      "suspicious": {
+        "noArrayIndexKey": "off"
+      },
       "nursery": {
         "useSortedClasses": {
           "level": "warn",
