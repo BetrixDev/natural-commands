@@ -19,11 +19,11 @@ export const CodeExample = ({ input, output }: CodeExampleProps) => {
     <div>
       <div className="mb-6">
         <h4 className="mb-2 font-medium text-gray-400 text-sm">You Type:</h4>
-        <div className="rounded-md border border-gray-700 bg-gray-900/50 p-4">
+        <div className="rounded-md border border-gray-700 bg-gray-900/50 p-4 font-mono text-sm">
           {isAnimating ? (
             <TypeAnimation
               text={input}
-              typingSpeed={30}
+              typingSpeed={10}
               className="text-gray-200"
             />
           ) : (
@@ -42,10 +42,10 @@ export const CodeExample = ({ input, output }: CodeExampleProps) => {
               text={output}
               typingSpeed={10}
               startDelay={input.length * 30 + 500}
-              className="text-emerald-300"
+              className="text-purple-300"
             />
           ) : (
-            <span className="whitespace-pre-wrap text-emerald-300">
+            <span className="whitespace-pre-wrap text-purple-300">
               {output}
             </span>
           )}

@@ -13,7 +13,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div className="md:col-span-1">
             <div className="mb-4 flex items-center space-x-2">
-              <BotMessageSquareIcon className="h-8 w-8 text-emerald-400" />
+              <BotMessageSquareIcon className="h-8 w-8 text-purple-400" />
               <span className="font-bold text-xl">Natural Commands</span>
             </div>
             <p className="mb-4 text-gray-400">
@@ -22,13 +22,13 @@ export const Footer = () => {
             <div className="flex space-x-4">
               <a
                 href="https://github.com/BetrixDev/natural-commands"
-                className="text-gray-400 transition-colors hover:text-emerald-400"
+                className="text-gray-400 transition-colors hover:text-purple-400"
               >
                 <Github size={20} />
               </a>
               <a
                 href="https://x.com/BetrixDev"
-                className="text-gray-400 transition-colors hover:text-emerald-400"
+                className="text-gray-400 transition-colors hover:text-purple-400"
               >
                 <Twitter size={20} />
               </a>
@@ -41,7 +41,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://docs.commandcraft.ai"
-                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                  className="text-gray-400 transition-colors hover:text-purple-400"
                 >
                   Documentation
                 </a>
@@ -49,7 +49,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://docs.commandcraft.ai/commands"
-                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                  className="text-gray-400 transition-colors hover:text-purple-400"
                 >
                   Command References
                 </a>
@@ -57,7 +57,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://docs.commandcraft.ai/tutorials"
-                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                  className="text-gray-400 transition-colors hover:text-purple-400"
                 >
                   Tutorials
                 </a>
@@ -65,7 +65,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://docs.commandcraft.ai/api"
-                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                  className="text-gray-400 transition-colors hover:text-purple-400"
                 >
                   API
                 </a>
@@ -79,7 +79,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://discord.gg/natural-commands"
-                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                  className="text-gray-400 transition-colors hover:text-purple-400"
                 >
                   Discord Server
                 </a>
@@ -87,7 +87,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://github.com/natural-commands/natural-commands"
-                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                  className="text-gray-400 transition-colors hover:text-purple-400"
                 >
                   Forum
                 </a>
@@ -95,7 +95,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://github.com/natural-commands/natural-commands"
-                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                  className="text-gray-400 transition-colors hover:text-purple-400"
                 >
                   Github
                 </a>
@@ -103,7 +103,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://github.com/natural-commands/natural-commands/issues"
-                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                  className="text-gray-400 transition-colors hover:text-purple-400"
                 >
                   Bug Reports
                 </a>
@@ -117,7 +117,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://docs.commandcraft.ai/legal/terms-of-service"
-                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                  className="text-gray-400 transition-colors hover:text-purple-400"
                 >
                   Terms of Service
                 </a>
@@ -125,7 +125,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://docs.commandcraft.ai/legal/privacy-policy"
-                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                  className="text-gray-400 transition-colors hover:text-purple-400"
                 >
                   Privacy Policy
                 </a>
@@ -133,7 +133,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://docs.commandcraft.ai/legal/license"
-                  className="text-gray-400 transition-colors hover:text-emerald-400"
+                  className="text-gray-400 transition-colors hover:text-purple-400"
                 >
                   License
                 </a>

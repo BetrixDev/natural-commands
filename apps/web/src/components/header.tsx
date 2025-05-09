@@ -11,7 +11,7 @@ export const Header = () => {
       <Container>
         <div className="flex items-center justify-between py-4">
           <div className="flex items-center space-x-2">
-            <BotMessageSquareIcon className="h-8 w-8 text-emerald-400" />
+            <BotMessageSquareIcon className="h-8 w-8 text-purple-400" />
             <span className="font-bold text-xl">Natural Commands</span>
           </div>
 
@@ -19,25 +19,25 @@ export const Header = () => {
           <nav className="hidden items-center space-x-8 md:flex">
             <a
               href="#benefits"
-              className="transition-colors hover:text-emerald-400"
+              className="transition-colors hover:text-purple-400"
             >
               Benefits
             </a>
             <a
               href="#examples"
-              className="transition-colors hover:text-emerald-400"
+              className="transition-colors hover:text-purple-400"
             >
               Examples
             </a>
             <a
               href="#compatibility"
-              className="transition-colors hover:text-emerald-400"
+              className="transition-colors hover:text-purple-400"
             >
               Compatibility
             </a>
             <a
               href="#download"
-              className="rounded-md bg-emerald-500 px-4 py-2 transition-colors hover:bg-emerald-600"
+              className="rounded-md bg-purple-500 px-4 py-2 transition-colors hover:bg-purple-600"
             >
               Download
             </a>
@@ -58,28 +58,28 @@ export const Header = () => {
           <nav className="flex flex-col space-y-4 border-gray-700 border-t py-4 md:hidden">
             <Link
               to="/"
-              className="transition-colors hover:text-emerald-400"
+              className="transition-colors hover:text-purple-400"
               onClick={() => setMobileMenuOpen(false)}
             >
               Benefits
             </Link>
             <Link
               to="/"
-              className="transition-colors hover:text-emerald-400"
+              className="transition-colors hover:text-purple-400"
               onClick={() => setMobileMenuOpen(false)}
             >
               Examples
             </Link>
             <Link
               to="/"
-              className="transition-colors hover:text-emerald-400"
+              className="transition-colors hover:text-purple-400"
               onClick={() => setMobileMenuOpen(false)}
             >
               Compatibility
             </Link>
             <Link
               to="/"
-              className="inline-block w-full rounded-md bg-emerald-500 px-4 py-2 text-center transition-colors hover:bg-emerald-600"
+              className="inline-block w-full rounded-md bg-purple-500 px-4 py-2 text-center transition-colors hover:bg-purple-600"
               onClick={() => setMobileMenuOpen(false)}
             >
               Download

@@ -18,7 +18,7 @@ export const Compatibility = () => {
 
             <div className="mb-8 space-y-4">
               <div className="flex items-start space-x-3">
-                <Check className="mt-1 h-6 w-6 flex-shrink-0 text-emerald-400" />
+                <Check className="mt-1 h-6 w-6 flex-shrink-0 text-purple-400" />
                 <div>
                   <h3 className="font-semibold text-lg">
                     Minecraft Version Support
@@ -30,7 +30,7 @@ export const Compatibility = () => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <Server className="mt-1 h-6 w-6 flex-shrink-0 text-emerald-400" />
+                <Server className="mt-1 h-6 w-6 flex-shrink-0 text-purple-400" />
                 <div>
                   <h3 className="font-semibold text-lg">
                     Server Compatibility
@@ -42,7 +42,7 @@ export const Compatibility = () => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <Shield className="mt-1 h-6 w-6 flex-shrink-0 text-emerald-400" />
+                <Shield className="mt-1 h-6 w-6 flex-shrink-0 text-purple-400" />
                 <div>
                   <h3 className="font-semibold text-lg">Permission System</h3>
                   <p className="text-gray-300">
@@ -66,7 +66,7 @@ export const Compatibility = () => {
               </p>
               <a
                 href="https://www.google.com"
-                className="inline-flex items-center rounded-md bg-emerald-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-emerald-600"
+                className="inline-flex items-center rounded-md bg-purple-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-purple-600"
               >
                 <Download className="mr-2 h-5 w-5" />
                 Download v0.0.1
@@ -87,21 +87,13 @@ export const Compatibility = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent" />
               <div className="absolute bottom-0 left-0 p-6">
-                <span className="mb-2 inline-block rounded-full bg-emerald-500 px-3 py-1 font-medium text-sm text-white">
+                <span className="mb-2 inline-block rounded-full bg-purple-500 px-3 py-1 font-medium text-sm text-white">
                   Simple to Use
                 </span>
                 <h3 className="font-bold text-white text-xl md:text-2xl">
                   Transform Your Minecraft Experience
                 </h3>
               </div>
-            </div>
-
-            <div className="-bottom-8 -right-8 absolute hidden h-48 w-48 overflow-hidden rounded-lg border-4 border-gray-700 bg-gray-900 shadow-xl md:block">
-              <img
-                src="https://images.pexels.com/photos/7633848/pexels-photo-7633848.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                alt="Player using Natural Commands"
-                className="h-full w-full object-cover"
-              />
             </div>
           </div>
         </div>

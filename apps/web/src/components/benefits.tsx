@@ -8,25 +8,25 @@ export const Benefits = () => {
       title: "Natural Language Understanding",
       description:
         "Simply describe what you want to do in plain English. No need to memorize complex command syntax or parameters.",
-      icon: <Sparkles className="h-8 w-8 text-emerald-400" />,
+      icon: <Sparkles className="h-8 w-8 text-purple-400" />,
     },
     {
       title: "Save Hours of Time",
       description:
         "Create complex commands in seconds that would take minutes or hours to manually type and debug.",
-      icon: <Clock className="h-8 w-8 text-emerald-400" />,
+      icon: <Clock className="h-8 w-8 text-purple-400" />,
     },
     {
       title: "For Players of All Levels",
       description:
         "Whether you're a beginner or an expert, transform your Minecraft experience with powerful commands you never knew existed.",
-      icon: <UserCheck className="h-8 w-8 text-emerald-400" />,
+      icon: <UserCheck className="h-8 w-8 text-purple-400" />,
     },
     {
       title: "Server Admin's Best Friend",
       description:
         "Quickly create custom game mechanics, events, and advanced server configurations without extensive knowledge.",
-      icon: <Server className="h-8 w-8 text-emerald-400" />,
+      icon: <Server className="h-8 w-8 text-purple-400" />,
     },
   ];
 

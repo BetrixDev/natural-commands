@@ -20,11 +20,12 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   head: () => ({
     meta: [
       {
-        title: "My App",
+        title: "Natural Commands",
       },
       {
         name: "description",
-        content: "My App is a web application",
+        content:
+          "Natural Commands is a plugin that allows you to use natural language to interact with Minecraft.",
       },
     ],
     links: [

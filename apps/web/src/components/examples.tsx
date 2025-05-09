@@ -47,7 +47,7 @@ export const Examples = () => {
                     key={index}
                     className={`rounded-md p-3 text-left transition-colors ${
                       activeExample === index
-                        ? "bg-emerald-500/20 text-white"
+                        ? "bg-purple-500/20 text-white"
                         : "text-gray-300 hover:bg-gray-800"
                     }`}
                     onClick={() => setActiveExample(index)}
