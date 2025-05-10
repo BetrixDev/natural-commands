@@ -18,11 +18,11 @@ export const Hero = () => {
             className={`transition-all duration-1000 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
           >
             <h1 className="mb-6 font-bold text-4xl leading-tight md:text-5xl lg:text-6xl">
-              <span className="text-purple-400">Simple Words</span> to
-              <span className="text-purple-400"> Powerful Commands</span>
+              <span className="text-accent">Simple Words</span> to
+              <span className="text-accent"> Powerful Commands</span>
             </h1>
 
-            <p className="mb-8 text-gray-300 text-xl leading-relaxed md:text-2xl">
+            <p className="mb-8 text-gray-300 text-md leading-relaxed md:text-lg">
               Natural Commands transforms your plain English into complex
               Minecraft commands instantly. Powered by advanced AI, it
               understands what you want to do and generates the right commands
@@ -32,13 +32,13 @@ export const Hero = () => {
             <div className="mb-12 flex flex-col justify-center gap-4 sm:flex-row">
               <a
                 href="#download"
-                className="rounded-md bg-purple-500 px-8 py-4 font-semibold text-lg text-white transition-colors hover:bg-purple-600"
+                className="rounded-md bg-accent px-8 py-4 font-semibold text-lg transition-colors hover:bg-accent/90"
               >
-                Download Now
+                Get Started
               </a>
               <a
                 href="#examples"
-                className="rounded-md bg-gray-700 px-8 py-4 font-semibold text-lg text-white transition-colors hover:bg-gray-600"
+                className="rounded-md bg-gray-700 px-8 py-4 font-semibold text-lg transition-colors hover:bg-gray-600"
               >
                 See Examples
               </a>
@@ -50,7 +50,7 @@ export const Hero = () => {
           >
             <div className="flex items-center justify-between bg-gray-900 px-4 py-2">
               <div className="flex items-center space-x-2">
-                <Terminal size={18} className="text-purple-400" />
+                <Terminal size={18} className="text-accent" />
                 <span className="font-medium text-sm">Natural Commands</span>
               </div>
               <div className="flex space-x-1">
@@ -76,7 +76,7 @@ export const Hero = () => {
                   text="/give @p diamond_sword 1"
                   typingSpeed={20}
                   startDelay={1750}
-                  className="text-purple-300"
+                  className="text-primary"
                 />
               </div>
             </div>

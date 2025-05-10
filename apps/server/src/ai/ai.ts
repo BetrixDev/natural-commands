@@ -1,7 +1,7 @@
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { generateText } from "ai";
 import { traceAISDKModel } from "evalite/ai-sdk";
 import { teleportCommandTool } from "./tools/commands/teleport-command";
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 
 type CommandGenerationPrompt = {
   prompt: string;
@@ -15,7 +15,7 @@ const openrouter = createOpenRouter({
 });
 
 export async function generateCommandFromPrompt(
-  prompt: CommandGenerationPrompt
+  prompt: CommandGenerationPrompt,
 ) {
   const minecraftVersion = prompt.minecraftVersion ?? "1.21.1";
   const playerName = prompt.playerName ?? "N/A";

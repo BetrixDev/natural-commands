@@ -1,9 +1,4 @@
-import {
-  BotMessageSquareIcon,
-  Disc as Discord,
-  Github,
-  Twitter,
-} from "lucide-react";
+import { BotMessageSquareIcon, Github, Twitter } from "lucide-react";
 import { Container } from "./container";
 
 export const Footer = () => {
@@ -13,7 +8,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div className="md:col-span-1">
             <div className="mb-4 flex items-center space-x-2">
-              <BotMessageSquareIcon className="h-8 w-8 text-purple-400" />
+              <BotMessageSquareIcon className="h-8 w-8 text-primary" />
               <span className="font-bold text-xl">Natural Commands</span>
             </div>
             <p className="mb-4 text-gray-400">
@@ -22,13 +17,13 @@ export const Footer = () => {
             <div className="flex space-x-4">
               <a
                 href="https://github.com/BetrixDev/natural-commands"
-                className="text-gray-400 transition-colors hover:text-purple-400"
+                className="text-gray-400 transition-colors hover:text-primary"
               >
                 <Github size={20} />
               </a>
               <a
                 href="https://x.com/BetrixDev"
-                className="text-gray-400 transition-colors hover:text-purple-400"
+                className="text-gray-400 transition-colors hover:text-primary"
               >
                 <Twitter size={20} />
               </a>
@@ -41,7 +36,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://docs.commandcraft.ai"
-                  className="text-gray-400 transition-colors hover:text-purple-400"
+                  className="text-gray-400 transition-colors hover:text-primary"
                 >
                   Documentation
                 </a>
@@ -49,7 +44,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://docs.commandcraft.ai/commands"
-                  className="text-gray-400 transition-colors hover:text-purple-400"
+                  className="text-gray-400 transition-colors hover:text-primary"
                 >
                   Command References
                 </a>
@@ -57,7 +52,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://docs.commandcraft.ai/tutorials"
-                  className="text-gray-400 transition-colors hover:text-purple-400"
+                  className="text-gray-400 transition-colors hover:text-primary"
                 >
                   Tutorials
                 </a>
@@ -65,7 +60,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://docs.commandcraft.ai/api"
-                  className="text-gray-400 transition-colors hover:text-purple-400"
+                  className="text-gray-400 transition-colors hover:text-primary"
                 >
                   API
                 </a>
@@ -79,7 +74,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://discord.gg/natural-commands"
-                  className="text-gray-400 transition-colors hover:text-purple-400"
+                  className="text-gray-400 transition-colors hover:text-primary"
                 >
                   Discord Server
                 </a>
@@ -87,7 +82,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://github.com/natural-commands/natural-commands"
-                  className="text-gray-400 transition-colors hover:text-purple-400"
+                  className="text-gray-400 transition-colors hover:text-primary"
                 >
                   Forum
                 </a>
@@ -95,7 +90,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://github.com/natural-commands/natural-commands"
-                  className="text-gray-400 transition-colors hover:text-purple-400"
+                  className="text-gray-400 transition-colors hover:text-primary"
                 >
                   Github
                 </a>
@@ -103,7 +98,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://github.com/natural-commands/natural-commands/issues"
-                  className="text-gray-400 transition-colors hover:text-purple-400"
+                  className="text-gray-400 transition-colors hover:text-primary"
                 >
                   Bug Reports
                 </a>
@@ -117,7 +112,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://docs.commandcraft.ai/legal/terms-of-service"
-                  className="text-gray-400 transition-colors hover:text-purple-400"
+                  className="text-gray-400 transition-colors hover:text-primary"
                 >
                   Terms of Service
                 </a>
@@ -125,7 +120,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://docs.commandcraft.ai/legal/privacy-policy"
-                  className="text-gray-400 transition-colors hover:text-purple-400"
+                  className="text-gray-400 transition-colors hover:text-primary"
                 >
                   Privacy Policy
                 </a>
@@ -133,7 +128,7 @@ export const Footer = () => {
               <li>
                 <a
                   href="https://docs.commandcraft.ai/legal/license"
-                  className="text-gray-400 transition-colors hover:text-purple-400"
+                  className="text-gray-400 transition-colors hover:text-primary"
                 >
                   License
                 </a>

@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
 
 function HomeComponent() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100">
+    <div className="min-h-screen bg-gradient-to-b from-background to-background/70">
       <Header />
       <main>
         <Hero />

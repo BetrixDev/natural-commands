@@ -42,12 +42,10 @@ export const CodeExample = ({ input, output }: CodeExampleProps) => {
               text={output}
               typingSpeed={10}
               startDelay={input.length * 30 + 500}
-              className="text-purple-300"
+              className="text-primary"
             />
           ) : (
-            <span className="whitespace-pre-wrap text-purple-300">
-              {output}
-            </span>
+            <span className="whitespace-pre-wrap text-primary">{output}</span>
           )}
         </div>
       </div>

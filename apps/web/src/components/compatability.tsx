@@ -18,7 +18,7 @@ export const Compatibility = () => {
 
             <div className="mb-8 space-y-4">
               <div className="flex items-start space-x-3">
-                <Check className="mt-1 h-6 w-6 flex-shrink-0 text-purple-400" />
+                <Check className="mt-1 h-6 w-6 flex-shrink-0 text-primary" />
                 <div>
                   <h3 className="font-semibold text-lg">
                     Minecraft Version Support
@@ -30,7 +30,7 @@ export const Compatibility = () => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <Server className="mt-1 h-6 w-6 flex-shrink-0 text-purple-400" />
+                <Server className="mt-1 h-6 w-6 flex-shrink-0 text-primary" />
                 <div>
                   <h3 className="font-semibold text-lg">
                     Server Compatibility
@@ -42,7 +42,7 @@ export const Compatibility = () => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <Shield className="mt-1 h-6 w-6 flex-shrink-0 text-purple-400" />
+                <Shield className="mt-1 h-6 w-6 flex-shrink-0 text-primary" />
                 <div>
                   <h3 className="font-semibold text-lg">Permission System</h3>
                   <p className="text-gray-300">
@@ -66,7 +66,7 @@ export const Compatibility = () => {
               </p>
               <a
                 href="https://www.google.com"
-                className="inline-flex items-center rounded-md bg-purple-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-purple-600"
+                className="inline-flex items-center rounded-md bg-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-accent/90"
               >
                 <Download className="mr-2 h-5 w-5" />
                 Download v0.0.1
@@ -87,7 +87,7 @@ export const Compatibility = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent" />
               <div className="absolute bottom-0 left-0 p-6">
-                <span className="mb-2 inline-block rounded-full bg-purple-500 px-3 py-1 font-medium text-sm text-white">
+                <span className="mb-2 inline-block rounded-full bg-accent px-3 py-1 font-medium text-sm text-white">
                   Simple to Use
                 </span>
                 <h3 className="font-bold text-white text-xl md:text-2xl">
