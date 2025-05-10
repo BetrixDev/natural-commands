@@ -15,6 +15,17 @@ export const auth = betterAuth({
     },
   },
   trustedOrigins: [process.env.CORS_ORIGIN || ""],
+  account: {
+    accountLinking: {
+      enabled: true,
+      providers: ["discord", "google"],
+    },
+  },
+  user: {
+    deleteUser: {
+      enabled: true,
+    },
+  },
   socialProviders: {
     discord: {
       clientId: process.env.DISCORD_CLIENT_ID as string,

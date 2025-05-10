@@ -14,6 +14,11 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as SignInImport } from './routes/sign-in'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as IndexImport } from './routes/index'
+import { Route as DashboardSettingsImport } from './routes/dashboard.settings'
+import { Route as DashboardServersImport } from './routes/dashboard.servers'
+import { Route as DashboardActivityImport } from './routes/dashboard.activity'
+import { Route as DashboardSettingsGeneralImport } from './routes/dashboard.settings.general'
+import { Route as DashboardSettingsBillingImport } from './routes/dashboard.settings.billing'
 
 // Create/Update Routes
 
@@ -33,6 +38,36 @@ const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const DashboardSettingsRoute = DashboardSettingsImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardServersRoute = DashboardServersImport.update({
+  id: '/servers',
+  path: '/servers',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardActivityRoute = DashboardActivityImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
+const DashboardSettingsGeneralRoute = DashboardSettingsGeneralImport.update({
+  id: '/general',
+  path: '/general',
+  getParentRoute: () => DashboardSettingsRoute,
+} as any)
+
+const DashboardSettingsBillingRoute = DashboardSettingsBillingImport.update({
+  id: '/billing',
+  path: '/billing',
+  getParentRoute: () => DashboardSettingsRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -60,48 +95,152 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignInImport
       parentRoute: typeof rootRoute
     }
+    '/dashboard/activity': {
+      id: '/dashboard/activity'
+      path: '/activity'
+      fullPath: '/dashboard/activity'
+      preLoaderRoute: typeof DashboardActivityImport
+      parentRoute: typeof DashboardImport
+    }
+    '/dashboard/servers': {
+      id: '/dashboard/servers'
+      path: '/servers'
+      fullPath: '/dashboard/servers'
+      preLoaderRoute: typeof DashboardServersImport
+      parentRoute: typeof DashboardImport
+    }
+    '/dashboard/settings': {
+      id: '/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof DashboardSettingsImport
+      parentRoute: typeof DashboardImport
+    }
+    '/dashboard/settings/billing': {
+      id: '/dashboard/settings/billing'
+      path: '/billing'
+      fullPath: '/dashboard/settings/billing'
+      preLoaderRoute: typeof DashboardSettingsBillingImport
+      parentRoute: typeof DashboardSettingsImport
+    }
+    '/dashboard/settings/general': {
+      id: '/dashboard/settings/general'
+      path: '/general'
+      fullPath: '/dashboard/settings/general'
+      preLoaderRoute: typeof DashboardSettingsGeneralImport
+      parentRoute: typeof DashboardSettingsImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface DashboardSettingsRouteChildren {
+  DashboardSettingsBillingRoute: typeof DashboardSettingsBillingRoute
+  DashboardSettingsGeneralRoute: typeof DashboardSettingsGeneralRoute
+}
+
+const DashboardSettingsRouteChildren: DashboardSettingsRouteChildren = {
+  DashboardSettingsBillingRoute: DashboardSettingsBillingRoute,
+  DashboardSettingsGeneralRoute: DashboardSettingsGeneralRoute,
+}
+
+const DashboardSettingsRouteWithChildren =
+  DashboardSettingsRoute._addFileChildren(DashboardSettingsRouteChildren)
+
+interface DashboardRouteChildren {
+  DashboardActivityRoute: typeof DashboardActivityRoute
+  DashboardServersRoute: typeof DashboardServersRoute
+  DashboardSettingsRoute: typeof DashboardSettingsRouteWithChildren
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardActivityRoute: DashboardActivityRoute,
+  DashboardServersRoute: DashboardServersRoute,
+  DashboardSettingsRoute: DashboardSettingsRouteWithChildren,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/sign-in': typeof SignInRoute
+  '/dashboard/activity': typeof DashboardActivityRoute
+  '/dashboard/servers': typeof DashboardServersRoute
+  '/dashboard/settings': typeof DashboardSettingsRouteWithChildren
+  '/dashboard/settings/billing': typeof DashboardSettingsBillingRoute
+  '/dashboard/settings/general': typeof DashboardSettingsGeneralRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/sign-in': typeof SignInRoute
+  '/dashboard/activity': typeof DashboardActivityRoute
+  '/dashboard/servers': typeof DashboardServersRoute
+  '/dashboard/settings': typeof DashboardSettingsRouteWithChildren
+  '/dashboard/settings/billing': typeof DashboardSettingsBillingRoute
+  '/dashboard/settings/general': typeof DashboardSettingsGeneralRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/sign-in': typeof SignInRoute
+  '/dashboard/activity': typeof DashboardActivityRoute
+  '/dashboard/servers': typeof DashboardServersRoute
+  '/dashboard/settings': typeof DashboardSettingsRouteWithChildren
+  '/dashboard/settings/billing': typeof DashboardSettingsBillingRoute
+  '/dashboard/settings/general': typeof DashboardSettingsGeneralRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/sign-in'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/sign-in'
+    | '/dashboard/activity'
+    | '/dashboard/servers'
+    | '/dashboard/settings'
+    | '/dashboard/settings/billing'
+    | '/dashboard/settings/general'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/sign-in'
-  id: '__root__' | '/' | '/dashboard' | '/sign-in'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/sign-in'
+    | '/dashboard/activity'
+    | '/dashboard/servers'
+    | '/dashboard/settings'
+    | '/dashboard/settings/billing'
+    | '/dashboard/settings/general'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/sign-in'
+    | '/dashboard/activity'
+    | '/dashboard/servers'
+    | '/dashboard/settings'
+    | '/dashboard/settings/billing'
+    | '/dashboard/settings/general'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
   SignInRoute: typeof SignInRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
+  DashboardRoute: DashboardRouteWithChildren,
   SignInRoute: SignInRoute,
 }
 
@@ -124,10 +263,39 @@ export const routeTree = rootRoute
       "filePath": "index.tsx"
     },
     "/dashboard": {
-      "filePath": "dashboard.tsx"
+      "filePath": "dashboard.tsx",
+      "children": [
+        "/dashboard/activity",
+        "/dashboard/servers",
+        "/dashboard/settings"
+      ]
     },
     "/sign-in": {
       "filePath": "sign-in.tsx"
+    },
+    "/dashboard/activity": {
+      "filePath": "dashboard.activity.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/servers": {
+      "filePath": "dashboard.servers.tsx",
+      "parent": "/dashboard"
+    },
+    "/dashboard/settings": {
+      "filePath": "dashboard.settings.tsx",
+      "parent": "/dashboard",
+      "children": [
+        "/dashboard/settings/billing",
+        "/dashboard/settings/general"
+      ]
+    },
+    "/dashboard/settings/billing": {
+      "filePath": "dashboard.settings.billing.tsx",
+      "parent": "/dashboard/settings"
+    },
+    "/dashboard/settings/general": {
+      "filePath": "dashboard.settings.general.tsx",
+      "parent": "/dashboard/settings"
     }
   }
 }

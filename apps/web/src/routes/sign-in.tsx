@@ -24,7 +24,7 @@ function RouteComponent() {
 
       const { data, error } = await authClient.signIn.social({
         provider,
-        callbackURL: `${origin}/dashboard`,
+        callbackURL: `${origin}/dashboard/servers`,
       });
 
       if (error) {

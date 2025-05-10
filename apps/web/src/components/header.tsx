@@ -61,9 +61,14 @@ export const Header = ({
                   </Button>
                 )}
                 {session?.user !== undefined && (
-                  <Button variant="destructive" onClick={() => signOut()}>
-                    Sign Out
-                  </Button>
+                  <>
+                    <Button variant="outline" asChild>
+                      <Link to="/dashboard/servers">Dashboard</Link>
+                    </Button>
+                    <Button variant="destructive" onClick={() => signOut()}>
+                      Sign Out
+                    </Button>
+                  </>
                 )}
                 <Button
                   className="bg-accent px-4 py-2 text-white transition-colors hover:bg-accent/90"
@@ -92,9 +97,14 @@ export const Header = ({
               </Link>
             )}
             {session?.user !== undefined && (
-              <Button variant="destructive" onClick={() => signOut()}>
-                Sign Out
-              </Button>
+              <>
+                <Button variant="outline" asChild>
+                  <Link to="/dashboard/servers">Dashboard</Link>
+                </Button>
+                <Button variant="destructive" onClick={() => signOut()}>
+                  Sign Out
+                </Button>
+              </>
             )}
             <Button
               asChild

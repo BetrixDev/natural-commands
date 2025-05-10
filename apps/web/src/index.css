@@ -1,14 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:where(.dark, .dark *));
-
-@theme {
-	--font-sans: "Geist", ui-sans-serif, system-ui, sans-serif,
-		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	--font-code: "Consolas", ui-monospace, monospace;
-}
 
 html,
 body {
@@ -53,7 +47,7 @@ body {
 	--sidebar-border: oklch(0.95 0.03 307.17);
 	--sidebar-ring: oklch(0.66 0.21 354.31);
 	--destructive-foreground: oklch(1 0 0);
-	--font-sans: Poppins, sans-serif;
+	--font-sans: Inter, sans-serif;
 	--font-serif: Lora, serif;
 	--font-mono: Fira Code, monospace;
 	--shadow-color: hsl(325.78 58.18% 56.86% / 0.5);
@@ -114,7 +108,7 @@ body {
 	--sidebar-ring: oklch(0.66 0.21 354.31);
 	--destructive-foreground: oklch(0.25 0.03 234.16);
 	--radius: 0.4rem;
-	--font-sans: Poppins, sans-serif;
+	--font-sans: Inter, sans-serif;
 	--font-serif: Lora, serif;
 	--font-mono: Fira Code, monospace;
 	--shadow-color: #324859;
@@ -176,7 +170,7 @@ body {
 	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
 	--color-sidebar-border: var(--sidebar-border);
 	--color-sidebar-ring: var(--sidebar-ring);
-	--font-sans: Poppins, sans-serif;
+	--font-sans: Inter, sans-serif;
 	--font-mono: Fira Code, monospace;
 	--font-serif: Lora, serif;
 	--radius: 0.4rem;

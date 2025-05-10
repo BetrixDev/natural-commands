@@ -35,6 +35,10 @@
     "db:generate": {
       "cache": false,
       "persistent": true
+    },
+    "auth:generate": {
+      "cache": false,
+      "persistent": true
     }
   }
 }

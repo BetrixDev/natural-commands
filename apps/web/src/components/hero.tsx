@@ -1,22 +1,14 @@
 import { Terminal } from "lucide-react";
-import { useEffect, useState } from "react";
 import { Container } from "./container";
 import { TypeAnimation } from "./type-animation";
+import { Button } from "./ui/button";
 
 export const Hero = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
   return (
     <section className="relative overflow-hidden py-16 md:py-24">
       <Container className="relative z-20">
         <div className="mx-auto max-w-4xl text-center">
-          <div
-            className={`transition-all duration-1000 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
-          >
+          <div>
             <h1 className="mb-6 font-bold text-4xl leading-tight md:text-5xl lg:text-6xl">
               <span className="text-accent">Simple Words</span> to
               <span className="text-accent"> Powerful Commands</span>
@@ -30,24 +22,19 @@ export const Hero = () => {
             </p>
 
             <div className="mb-12 flex flex-col justify-center gap-4 sm:flex-row">
-              <a
-                href="#download"
-                className="rounded-md bg-accent px-8 py-4 font-semibold text-lg transition-colors hover:bg-accent/90"
+              <Button className="h-16 px-8 font-semibold text-lg">
+                <a href="#download">Get Started</a>
+              </Button>
+              <Button
+                variant="secondary"
+                className="h-16 px-8 font-semibold text-lg"
               >
-                Get Started
-              </a>
-              <a
-                href="#examples"
-                className="rounded-md bg-gray-700 px-8 py-4 font-semibold text-lg transition-colors hover:bg-gray-600"
-              >
-                See Examples
-              </a>
+                <a href="#examples">See Examples</a>
+              </Button>
             </div>
           </div>
 
-          <div
-            className={`relative mx-auto max-w-3xl overflow-hidden rounded-lg border border-gray-700 bg-gray-800 shadow-xl transition-all delay-300 duration-1000 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
-          >
+          <div className="relative mx-auto max-w-3xl overflow-hidden rounded-lg border border-gray-700 bg-gray-800 shadow-xl">
             <div className="flex items-center justify-between bg-gray-900 px-4 py-2">
               <div className="flex items-center space-x-2">
                 <Terminal size={18} className="text-accent" />
@@ -64,7 +51,7 @@ export const Hero = () => {
               <div className="mb-4">
                 <span className="text-green-400">&gt; </span>
                 <TypeAnimation
-                  text="Give me a diamond sword"
+                  text="Give me an enchanted book with sharpness 5"
                   typingSpeed={20}
                   startDelay={500}
                   className="text-gray-200"
@@ -73,9 +60,9 @@ export const Hero = () => {
 
               <div className="overflow-x-auto rounded-md bg-gray-900/50 p-3 text-gray-300">
                 <TypeAnimation
-                  text="/give @p diamond_sword 1"
+                  text="give @s enchanted_book[stored_enchantments={'sharpness':5}] 1"
                   typingSpeed={20}
-                  startDelay={1750}
+                  startDelay={1600}
                   className="text-primary"
                 />
               </div>
