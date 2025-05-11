@@ -1,3 +1,4 @@
+import { defineStepper } from "@/components/stepper";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,27 +27,32 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { trpc } from "@/utils/trpc";
+import { trpc, trpcClient } from "@/utils/trpc";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import {
   CheckIcon,
+  CircleAlertIcon,
   CopyIcon,
   EllipsisVerticalIcon,
+  EyeIcon,
+  EyeOffIcon,
   Loader2Icon,
   PlusIcon,
+  RefreshCwIcon,
   ServerIcon,
   TrashIcon,
   XIcon,
 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/dashboard/servers")({
   component: RouteComponent,
   loader: ({ context }) => {
     context.queryClient.prefetchQuery(
-      trpc.serverConnection.getServerConnectionsForUser.queryOptions()
+      trpc.serverConnection.getServerConnectionsForUser.queryOptions(),
     );
   },
 });
@@ -65,10 +71,10 @@ function RouteComponent() {
       onSuccess: () => {
         setIsConnectServerDialogOpen(false);
         queryClient.invalidateQueries(
-          trpc.serverConnection.getServerConnectionsForUser.queryFilter()
+          trpc.serverConnection.getServerConnectionsForUser.queryFilter(),
         );
       },
-    })
+    }),
   );
 
   const connectServerForm = useForm({
@@ -174,7 +180,18 @@ function RouteComponent() {
         </div>
       </CardHeader>
       <CardContent>
-        <hr className="mb-6" />
+        {serverConnections?.length === 1 && (
+          <div className="mb-2 text-muted-foreground text-sm">
+            You have hit the maximum number of connections. Upgrade your plan to
+            add more.{" "}
+            <span className="text-primary underline">
+              <Link to="/dashboard/settings/billing" preload="intent">
+                Upgrade
+              </Link>
+            </span>
+          </div>
+        )}
+        <hr className="mb-3" />
         {isLoadingServerConnections ? (
           <div className="flex items-center justify-center gap-2 text-muted-foreground text-sm">
             <Loader2Icon className="h-5 w-5 animate-spin" /> Loading server
@@ -204,6 +221,21 @@ function RouteComponent() {
   );
 }
 
+const { Stepper: VerificationStepper } = defineStepper(
+  {
+    id: "copy-token-to-config",
+    label: "Copy Token to Config",
+  },
+  {
+    id: "verify-server",
+    label: "Verify Server",
+  },
+  {
+    id: "check-verification",
+    label: "Check Verification",
+  },
+);
+
 type ServerConnection = {
   id: string;
   name: string;
@@ -228,8 +260,8 @@ function ServerConnectionCard({
       },
       {
         staleTime: 1000 * 60 * 5,
-      }
-    )
+      },
+    ),
   );
 
   const { mutate: deleteServerConnection } = useMutation(
@@ -240,13 +272,46 @@ function ServerConnectionCard({
           (old) => {
             return old?.filter(
               (connection: ServerConnection) =>
-                connection.id !== payload.connectionId
+                connection.id !== payload.connectionId,
             );
-          }
+          },
         );
       },
-    })
+    }),
   );
+
+  const { mutate: refreshServerConnectionToken } = useMutation(
+    trpc.serverConnection.refreshServerConnectionToken.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries(
+          trpc.serverConnection.getServerConnectionsForUser.queryFilter(),
+        );
+        toast.success("Token refreshed");
+      },
+    }),
+  );
+
+  const { mutate: checkVerification, isPending: isCheckingVerification } =
+    useMutation({
+      mutationFn: async () => {
+        return trpcClient.serverConnection.getVerificationStatus.query({
+          connectionId: serverConnection.id,
+        });
+      },
+      onSuccess: (data) => {
+        if (data.isVerified) {
+          toast.success("Server verified");
+          queryClient.invalidateQueries(
+            trpc.serverConnection.getServerConnectionsForUser.queryFilter(),
+          );
+        } else {
+          toast.error("Server not verified", {
+            description:
+              "Please verify the server by running the command in the Verify Server step.",
+          });
+        }
+      },
+    });
 
   return (
     <>
@@ -275,8 +340,8 @@ function ServerConnectionCard({
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      <div className="flex grow flex-col gap-2 rounded-lg bg-background p-4">
-        <div className="flex items-center justify-between">
+      <div className="flex grow flex-col gap-2 rounded-lg bg-background">
+        <div className="flex items-center justify-between p-4">
           <div className="flex items-center gap-2">
             <div className="flex h-10 w-10 items-center justify-center rounded-md bg-muted">
               {serverStatus?.iconBase64 ? (
@@ -330,8 +395,22 @@ function ServerConnectionCard({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  navigator.clipboard.writeText(serverConnection.token);
+                  toast.success("Token copied to clipboard");
+                }}
+              >
                 <CopyIcon /> Copy Token
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  refreshServerConnectionToken({
+                    connectionId: serverConnection.id,
+                  });
+                }}
+              >
+                <RefreshCwIcon /> Refresh Token
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
@@ -343,7 +422,150 @@ function ServerConnectionCard({
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
+        {!serverConnection.isVerified && (
+          <div className="bg-gray-900">
+            <div className="space-y-4 rounded-b-lg border-yellow-500/20 border-t bg-yellow-500/15 p-3">
+              <div className="flex items-center gap-2 text-sm text-yellow-400">
+                <CircleAlertIcon className="h-4 w-4" /> This server is not yet
+                verified
+              </div>
+              <VerificationStepper.Provider variant="vertical">
+                {({ methods }) => (
+                  <>
+                    <VerificationStepper.Navigation>
+                      {methods.all.map((step) => (
+                        <VerificationStepper.Step
+                          key={step.id}
+                          of={step.id}
+                          onClick={() => methods.goTo(step.id)}
+                        >
+                          <VerificationStepper.Title className="text-sm">
+                            {step.label}
+                          </VerificationStepper.Title>
+                          {methods.when(step.id, () => (
+                            <VerificationStepper.Panel>
+                              {step.id === "copy-token-to-config" && (
+                                <div className="mb-4 flex flex-col gap-2 rounded-lg border border-accent bg-background/90 p-4">
+                                  <p className="flex items-center gap-1 text-sm">
+                                    Copy and paste the token into the plugin's
+                                    configuration file located in the
+                                    <span className="rounded-md bg-muted px-1 py-0.5 text-xs">
+                                      plugins/NaturalCommands/config.yml
+                                    </span>
+                                    file.
+                                  </p>
+                                  <ServerTokenView
+                                    token={serverConnection.token}
+                                  />
+                                </div>
+                              )}
+                              {step.id === "verify-server" && (
+                                <div className="mb-4 flex flex-col gap-2 rounded-lg border border-accent bg-background/90 p-4">
+                                  <p className="text-sm">
+                                    Verify the server by running the following
+                                    command.
+                                  </p>
+                                  <CodeWithCopyButton
+                                    code={`/verify ${serverConnection.id}`}
+                                  />
+                                </div>
+                              )}
+                              {step.id === "check-verification" && (
+                                <div className="mb-4 flex flex-col gap-2 rounded-lg border border-accent bg-background/90 p-4">
+                                  <p className="text-sm">
+                                    Click the Check Verification button below to
+                                    ensure the server has been verified.
+                                  </p>
+                                </div>
+                              )}
+                              <VerificationStepper.Controls>
+                                {
+                                  <Button
+                                    variant="outline"
+                                    onClick={methods.prev}
+                                    disabled={
+                                      methods.isFirst || isCheckingVerification
+                                    }
+                                  >
+                                    Previous
+                                  </Button>
+                                }
+                                <Button
+                                  onClick={
+                                    methods.isLast
+                                      ? () => checkVerification()
+                                      : methods.next
+                                  }
+                                  disabled={isCheckingVerification}
+                                >
+                                  {methods.isLast
+                                    ? "Check Verification"
+                                    : "Next"}
+                                </Button>
+                              </VerificationStepper.Controls>
+                            </VerificationStepper.Panel>
+                          ))}
+                        </VerificationStepper.Step>
+                      ))}
+                    </VerificationStepper.Navigation>
+                  </>
+                )}
+              </VerificationStepper.Provider>
+            </div>
+          </div>
+        )}
       </div>
     </>
+  );
+}
+function ServerTokenView({ token }: { token: string }) {
+  const [showToken, setShowToken] = useState(false);
+  const hiddenToken = `${token.slice(0, 8)}...`;
+
+  return (
+    <div className="flex items-center gap-2 rounded-md bg-muted">
+      <div className="flex-1 pl-2 font-mono text-sm">
+        {showToken ? token : hiddenToken}
+      </div>
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={() => setShowToken(!showToken)}
+      >
+        {showToken ? (
+          <EyeOffIcon className="h-4 w-4" />
+        ) : (
+          <EyeIcon className="h-4 w-4" />
+        )}
+      </Button>
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={() => {
+          navigator.clipboard.writeText(token);
+          toast.success("Token copied to clipboard");
+        }}
+      >
+        <CopyIcon className="h-4 w-4" />
+      </Button>
+    </div>
+  );
+}
+
+function CodeWithCopyButton({ code }: { code: string }) {
+  return (
+    <div className="flex items-center justify-between gap-2 rounded-md bg-muted">
+      <code className="rounded-md bg-muted px-1 py-0.5 text-xs">{code}</code>
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={() => {
+          navigator.clipboard.writeText(code);
+          toast.success("Copied to clipboard");
+        }}
+      >
+        <CopyIcon className="h-4 w-4" />
+      </Button>
+    </div>
   );
 }

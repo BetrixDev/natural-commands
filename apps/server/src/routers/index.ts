@@ -1,11 +1,11 @@
 import { db } from "@/db";
 import { account } from "@/db/schema/auth";
 import { serverConnection } from "@/db/schema/schema";
+import { TRPCError } from "@trpc/server";
 import { and, eq } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { z } from "zod";
 import { protectedProcedure, router } from "../lib/trpc";
-import { TRPCError } from "@trpc/server";
 
 // Running into wierd type issues so this router file isn't how I would like it to be
 
@@ -28,7 +28,7 @@ export const appRouter = router({
         z.object({
           serverName: z.string().min(1),
           serverAddress: z.string().min(1),
-        })
+        }),
       )
       .mutation(async ({ ctx, input }) => {
         const usersCurrentConnections =
@@ -52,6 +52,44 @@ export const appRouter = router({
           address: input.serverAddress,
           authorId: ctx.session.user.id,
         });
+      }),
+    refreshServerConnectionToken: protectedProcedure
+      .input(z.object({ connectionId: z.string() }))
+      .mutation(async ({ ctx, input }) => {
+        await db
+          .update(serverConnection)
+          .set({
+            token: nanoid(36),
+          })
+          .where(
+            and(
+              eq(serverConnection.id, input.connectionId),
+              eq(serverConnection.authorId, ctx.session.user.id),
+            ),
+          );
+      }),
+    getVerificationStatus: protectedProcedure
+      .input(z.object({ connectionId: z.string() }))
+      .query(async ({ ctx, input }) => {
+        const serverConnectionData = await db.query.serverConnection.findFirst({
+          where: and(
+            eq(serverConnection.id, input.connectionId),
+            eq(serverConnection.authorId, ctx.session.user.id),
+          ),
+          columns: {
+            isVerified: true,
+            id: true,
+          },
+        });
+
+        if (!serverConnectionData) {
+          throw new TRPCError({ code: "NOT_FOUND" });
+        }
+
+        return {
+          isVerified: serverConnectionData.isVerified,
+          id: serverConnectionData.id,
+        } as { isVerified: boolean; id: string };
       }),
     getServerConnectionsForUser: protectedProcedure.query(async ({ ctx }) => {
       const serverConnections = await db.query.serverConnection.findMany({
@@ -80,8 +118,8 @@ export const appRouter = router({
           .where(
             and(
               eq(serverConnection.id, input.connectionId),
-              eq(serverConnection.authorId, ctx.session.user.id)
-            )
+              eq(serverConnection.authorId, ctx.session.user.id),
+            ),
           );
       }),
   },
@@ -103,7 +141,7 @@ export const appRouter = router({
             headers: {
               "User-Agent": "Natural Commands",
             },
-          }
+          },
         )
       ).json();
 

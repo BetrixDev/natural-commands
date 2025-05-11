@@ -28,7 +28,7 @@ export const Route = createFileRoute("/dashboard/settings/general")({
   component: RouteComponent,
   loader: ({ context }) => {
     context.queryClient.prefetchQuery(
-      trpc.user.getLinkedAccounts.queryOptions()
+      trpc.user.getLinkedAccounts.queryOptions(),
     );
   },
 });
@@ -37,15 +37,15 @@ function RouteComponent() {
   const navigate = Route.useNavigate();
 
   const { data: linkedAccounts } = useQuery(
-    trpc.user.getLinkedAccounts.queryOptions()
+    trpc.user.getLinkedAccounts.queryOptions(),
   );
 
   const isLinkedToGoogle = linkedAccounts?.some(
-    (account) => account.provider === "google"
+    (account) => account.provider === "google",
   );
 
   const isLinkedToDiscord = linkedAccounts?.some(
-    (account) => account.provider === "discord"
+    (account) => account.provider === "discord",
   );
 
   const { mutate: linkSocialProvider, isPending: isLinking } = useMutation({
