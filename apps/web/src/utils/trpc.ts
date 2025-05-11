@@ -17,6 +17,13 @@ export const queryClient = new QueryClient({
       });
     },
   }),
+  defaultOptions: {
+    mutations: {
+      onError: () => {
+        toast.error("Unknown error occurred");
+      },
+    },
+  },
 });
 
 export const trpcClient = createTRPCClient<AppRouter>({

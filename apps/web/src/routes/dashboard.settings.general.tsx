@@ -16,7 +16,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { authClient, useSession } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
 import { trpc } from "@/utils/trpc";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/dashboard/settings/general")({
   component: RouteComponent,
   loader: ({ context }) => {
     context.queryClient.prefetchQuery(
-      trpc.user.getLinkedAccounts.queryOptions(),
+      trpc.user.getLinkedAccounts.queryOptions()
     );
   },
 });
@@ -36,18 +36,16 @@ export const Route = createFileRoute("/dashboard/settings/general")({
 function RouteComponent() {
   const navigate = Route.useNavigate();
 
-  const { data: session } = useSession();
-
   const { data: linkedAccounts } = useQuery(
-    trpc.user.getLinkedAccounts.queryOptions(),
+    trpc.user.getLinkedAccounts.queryOptions()
   );
 
   const isLinkedToGoogle = linkedAccounts?.some(
-    (account) => account.provider === "google",
+    (account) => account.provider === "google"
   );
 
   const isLinkedToDiscord = linkedAccounts?.some(
-    (account) => account.provider === "discord",
+    (account) => account.provider === "discord"
   );
 
   const { mutate: linkSocialProvider, isPending: isLinking } = useMutation({
@@ -113,7 +111,7 @@ function RouteComponent() {
         <CardHeader>
           <CardTitle>Account Information</CardTitle>
           <CardDescription>Update your account details</CardDescription>
-          <CardContent className="mt-4">
+          <CardContent className="mt-4 p-0">
             <div className="flex flex-col gap-4 rounded-lg border p-4">
               <div>
                 <h1 className="font-semibold">Connected Accounts</h1>
@@ -176,7 +174,7 @@ function RouteComponent() {
           <CardDescription>
             Manage your personal data and privacy settings
           </CardDescription>
-          <CardContent className="mt-4 flex flex-col gap-4">
+          <CardContent className="mt-4 flex flex-col gap-4 p-0">
             <div className="flex h-16 items-center justify-between rounded-lg border p-4">
               <div>
                 <p className="font-semibold">Download Your Data</p>
@@ -211,6 +209,11 @@ function RouteComponent() {
                     </DialogDescription>
                   </DialogHeader>
                   <DialogFooter>
+                    <DialogClose asChild>
+                      <Button disabled={isDeleting} variant="outline">
+                        Cancel
+                      </Button>
+                    </DialogClose>
                     <Button
                       variant="destructive"
                       onClick={() => deleteAccount()}
@@ -218,11 +221,6 @@ function RouteComponent() {
                     >
                       {isDeleting ? "Deleting..." : "Delete Account"}
                     </Button>
-                    <DialogClose asChild>
-                      <Button disabled={isDeleting} variant="outline">
-                        Cancel
-                      </Button>
-                    </DialogClose>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>

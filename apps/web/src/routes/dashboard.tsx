@@ -39,17 +39,17 @@ function RouteComponent() {
         <Tabs defaultValue={currentTab}>
           <TabsList className="w-full">
             <TabsTrigger value="activity" asChild>
-              <Link to="/dashboard/activity">
+              <Link to="/dashboard/activity" preload="intent">
                 <HistoryIcon /> Activity
               </Link>
             </TabsTrigger>
             <TabsTrigger value="servers" asChild>
-              <Link to="/dashboard/servers">
+              <Link to="/dashboard/servers" preload="intent">
                 <ServerIcon /> Connected Servers
               </Link>
             </TabsTrigger>
             <TabsTrigger value="settings" asChild>
-              <Link to="/dashboard/settings/general">
+              <Link to="/dashboard/settings/general" preload="intent">
                 <SettingsIcon /> Account Settings
               </Link>
             </TabsTrigger>

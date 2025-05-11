@@ -1,7 +1,7 @@
 import { authClient, useSession } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { BotMessageSquareIcon, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -15,6 +15,7 @@ export const Header = ({
   className?: string;
   showNav?: boolean;
 }) => {
+  const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const { data: session } = useSession();
@@ -32,6 +33,7 @@ export const Header = ({
     },
     onSuccess: () => {
       toast.success("Signed out successfully");
+      navigate({ to: "/" });
     },
   });
 
@@ -39,7 +41,7 @@ export const Header = ({
     <header
       className={cn(
         "sticky top-0 z-50 border-b bg-background/80 backdrop-blur-sm transition-colors duration-300",
-        className
+        className,
       )}
     >
       <Container>
@@ -74,7 +76,7 @@ export const Header = ({
                   className="bg-accent px-4 py-2 text-white transition-colors hover:bg-accent/90"
                   asChild
                 >
-                  <a href="#download">Download</a>
+                  <a href="/#download">Download</a>
                 </Button>
               </nav>
               <button
@@ -111,7 +113,7 @@ export const Header = ({
               className="w-full bg-accent text-white hover:bg-accent/90"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <a href="#download">Download</a>
+              <a href="/#download">Download</a>
             </Button>
           </nav>
         )}

@@ -15,6 +15,7 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
       cause: "No session",
     });
   }
+
   return next({
     ctx: {
       ...ctx,

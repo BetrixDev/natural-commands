@@ -22,10 +22,14 @@ function RouteComponent() {
       <Tabs defaultValue={currentTab}>
         <TabsList className="w-full">
           <TabsTrigger value="general" asChild>
-            <Link to="/dashboard/settings/general">General</Link>
+            <Link to="/dashboard/settings/general" preload="intent">
+              General
+            </Link>
           </TabsTrigger>
           <TabsTrigger value="billing" asChild>
-            <Link to="/dashboard/settings/billing">Billing</Link>
+            <Link to="/dashboard/settings/billing" preload="intent">
+              Billing
+            </Link>
           </TabsTrigger>
         </TabsList>
       </Tabs>
