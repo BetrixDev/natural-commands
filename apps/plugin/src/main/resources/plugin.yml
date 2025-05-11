@@ -1,0 +1,13 @@
+name: Natural Commands
+version: '0.1.0'
+main: app.vercel.naturalCommands.NaturalCommands
+api-version: '1.21'
+commands:
+  verify:
+    description: "Verify a server connection"
+    usage: "/verify [connectionId]"
+    permission: "naturalcommands.verify"
+    permission-message: "You do not have permission to use this command"
+libraries:
+  - com.github.shynixn.mccoroutine:mccoroutine-bukkit-api:2.22.0
+  - com.github.shynixn.mccoroutine:mccoroutine-bukkit-core:2.22.0
