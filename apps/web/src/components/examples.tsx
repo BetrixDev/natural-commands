@@ -36,9 +36,9 @@ export const Examples = () => {
           </p>
         </div>
 
-        <div className="mx-auto max-w-4xl overflow-hidden rounded-lg border border-gray-700 bg-gray-800 shadow-xl">
+        <div className="mx-auto max-w-4xl overflow-hidden rounded-lg border border-input bg-primary-foreground shadow-xl">
           <div className="grid grid-cols-1 md:grid-cols-3">
-            <div className="border-gray-700 border-b bg-gray-900 p-4 md:border-r md:border-b-0 md:p-6">
+            <div className="border-input border-b bg-primary-foreground/50 p-4 md:border-r md:border-b-0 md:p-6">
               <h3 className="mb-4 font-medium text-lg">Examples</h3>
               <div className="flex flex-col space-y-2">
                 {examples.map((example, index) => (
@@ -48,7 +48,7 @@ export const Examples = () => {
                     className={`rounded-md p-3 text-left transition-colors ${
                       activeExample === index
                         ? "bg-accent/20 text-white"
-                        : "text-gray-300 hover:bg-gray-800"
+                        : "text-muted-foreground hover:bg-accent/10"
                     }`}
                     onClick={() => setActiveExample(index)}
                   >

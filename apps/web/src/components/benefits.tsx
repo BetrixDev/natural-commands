@@ -31,7 +31,7 @@ export const Benefits = () => {
   ];
 
   return (
-    <section id="benefits" className="bg-gray-800/50 py-16">
+    <section id="benefits" className="bg-primary-foreground py-16">
       <Container>
         <div className="mb-12 text-center">
           <h2 className="mb-4 font-bold text-3xl md:text-4xl">

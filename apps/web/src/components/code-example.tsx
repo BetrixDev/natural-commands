@@ -18,8 +18,10 @@ export const CodeExample = ({ input, output }: CodeExampleProps) => {
   return (
     <div>
       <div className="mb-6">
-        <h4 className="mb-2 font-medium text-gray-400 text-sm">You Type:</h4>
-        <div className="rounded-md border border-gray-700 bg-gray-900/50 p-4 font-mono text-sm">
+        <h4 className="mb-2 font-medium text-muted-foreground text-sm">
+          You Type:
+        </h4>
+        <div className="rounded-md border border-input bg-primary-foreground/50 p-4 font-mono text-sm">
           {isAnimating ? (
             <TypeAnimation
               text={input}
@@ -36,7 +38,7 @@ export const CodeExample = ({ input, output }: CodeExampleProps) => {
         <h4 className="mb-2 font-medium text-gray-400 text-sm">
           Natural Commands AI Generates:
         </h4>
-        <div className="overflow-x-auto rounded-md border border-gray-700 bg-gray-900/50 p-4 font-mono text-sm">
+        <div className="overflow-x-auto rounded-md border border-input bg-primary-foreground/50 p-4 font-mono text-sm">
           {isAnimating ? (
             <TypeAnimation
               text={output}

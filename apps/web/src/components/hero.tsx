@@ -10,8 +10,9 @@ export const Hero = () => {
         <div className="mx-auto max-w-4xl text-center">
           <div>
             <h1 className="mb-6 font-bold text-4xl leading-tight md:text-5xl lg:text-6xl">
-              <span className="text-accent">Simple Words</span> to
-              <span className="text-accent"> Powerful Commands</span>
+              <span className="text-primary">Simple Words</span>{" "}
+              <span className="text-secondary">to</span>{" "}
+              <span className="text-primary"> Powerful Commands</span>
             </h1>
 
             <p className="mb-8 text-gray-300 text-md leading-relaxed md:text-lg">
@@ -22,20 +23,20 @@ export const Hero = () => {
             </p>
 
             <div className="mb-12 flex flex-col justify-center gap-4 sm:flex-row">
-              <Button className="h-16 px-8 font-semibold text-lg">
+              <Button className="h-12 px-8 font-semibold text-lg">
                 <a href="#download">Get Started</a>
               </Button>
               <Button
                 variant="secondary"
-                className="h-16 px-8 font-semibold text-lg"
+                className="h-12 px-8 font-semibold text-lg"
               >
                 <a href="#examples">See Examples</a>
               </Button>
             </div>
           </div>
 
-          <div className="relative mx-auto max-w-3xl overflow-hidden rounded-lg border border-gray-700 bg-gray-800 shadow-xl">
-            <div className="flex items-center justify-between bg-gray-900 px-4 py-2">
+          <div className="relative mx-auto max-w-3xl overflow-hidden rounded-lg border border-input bg-primary-foreground shadow-xl">
+            <div className="flex items-center justify-between border-b bg-primary-foreground/50 px-4 py-2">
               <div className="flex items-center space-x-2">
                 <Terminal size={18} className="text-accent" />
                 <span className="font-medium text-sm">Natural Commands</span>
@@ -58,7 +59,7 @@ export const Hero = () => {
                 />
               </div>
 
-              <div className="overflow-x-auto rounded-md bg-gray-900/50 p-3 text-gray-300">
+              <div className="overflow-x-auto rounded-md bg-background/50 p-3 text-gray-300">
                 <TypeAnimation
                   text="give @s enchanted_book[stored_enchantments={'sharpness':5}] 1"
                   typingSpeed={20}

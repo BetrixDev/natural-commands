@@ -38,8 +38,8 @@ export const Header = ({
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 bg-gray-900/80 shadow-md backdrop-blur-sm transition-colors duration-300",
-        className,
+        "sticky top-0 z-50 border-b bg-background/80 backdrop-blur-sm transition-colors duration-300",
+        className
       )}
     >
       <Container>
