@@ -1,3 +1,0 @@
-# This is the token for the server connection
-# This should be kept secure, you can refresh the token if it is compromised
-serverConnectionToken: "your-token-here"

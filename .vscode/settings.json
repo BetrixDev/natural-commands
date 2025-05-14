@@ -1,7 +1,0 @@
-{
-  "typescript.tsdk": "node_modules\\typescript\\lib",
-  "editor.defaultFormatter": "biomejs.biome",
-  "[kotlin]": {
-    "editor.defaultFormatter": "fwcd.kotlin"
-  }
-}

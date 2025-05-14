@@ -1,3 +1,4 @@
-node_modules
 .turbo
-apps/plugin/natural-commands.iml
+node_modules
+server
+target

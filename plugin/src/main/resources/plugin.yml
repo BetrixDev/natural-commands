@@ -1,0 +1,12 @@
+name: natural-commands
+version: '0.1.0'
+main: app.vercel.naturalCommands.NaturalCommands
+api-version: '1.21'
+prefix: NC
+authors: [ BetrixDev ]
+description: Simple Words to Powerful Commands
+website: https://natural-commands.vercel.app
+commands:
+  prompt:
+    description: Generate a command with plain English
+    usage: "prompt [userPrompt]"
