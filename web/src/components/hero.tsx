@@ -54,12 +54,12 @@ export const Hero = () => {
 
             <div className="p-6 text-left font-mono text-sm">
               <div className="mb-4">
-                <span className="text-primary-foreground">&gt; </span>
+                <span className="text-primary">&gt; </span>
                 <TypeAnimation
                   text="Give me an enchanted book with sharpness 5"
                   typingSpeed={20}
                   startDelay={500}
-                  className="text-primary-foreground"
+                  className="text-primary"
                 />
               </div>
 

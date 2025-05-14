@@ -26,10 +26,10 @@ export const CodeExample = ({ input, output }: CodeExampleProps) => {
             <TypeAnimation
               text={input}
               typingSpeed={10}
-              className="text-primary-foreground"
+              className="text-primary"
             />
           ) : (
-            <span className="text-primary-foreground">{input}</span>
+            <span className="text-primary">{input}</span>
           )}
         </div>
       </div>
