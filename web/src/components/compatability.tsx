@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const Compatibility = () => {
   return (
-    <section id="compatibility" className="bg-primary-foreground py-16">
+    <section id="compatibility" className="bg-card py-16">
       <div className="grid grid-cols-1 items-center gap-16 xl:grid-cols-2 xl:mx-24 lg:mx-12 md:mx-4 mx-2">
         <div>
           <h2 className="mb-6 font-bold text-3xl md:text-4xl">
@@ -53,7 +53,7 @@ export const Compatibility = () => {
 
           <div
             id="download"
-            className="rounded-lg border border-input bg-primary-foreground p-6"
+            className="rounded-lg border border-input bg-card p-6"
           >
             <h3 className="mb-4 font-bold text-2xl">
               Get Natural Commands Now
@@ -64,7 +64,7 @@ export const Compatibility = () => {
             </p>
             <Link
               href="/docs"
-              className="inline-flex items-center rounded-md bg-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-accent/90"
+              className="inline-flex items-center rounded-md bg-primary px-6 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
             >
               <Download className="mr-2 h-5 w-5" />
               Get Started

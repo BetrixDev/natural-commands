@@ -11,11 +11,11 @@ export const Hero = () => {
           <div>
             <h1 className="mb-6 font-bold text-4xl leading-tight md:text-5xl lg:text-6xl">
               <span className="text-primary">Simple Words</span>{" "}
-              <span className="text-secondary">to</span>{" "}
+              <span className="text-muted-foreground">to</span>{" "}
               <span className="text-primary"> Powerful Commands</span>
             </h1>
 
-            <p className="mb-8 text-gray-300 text-md leading-relaxed md:text-lg">
+            <p className="mb-8 text-muted-foreground text-md leading-relaxed md:text-lg">
               Natural Commands transforms your plain English into complex
               Minecraft commands instantly. Powered by advanced AI, it
               understands what you want to do and generates the right commands
@@ -37,11 +37,13 @@ export const Hero = () => {
             </div>
           </div>
 
-          <div className="relative mx-auto max-w-3xl overflow-hidden rounded-lg border border-input bg-primary-foreground shadow-xl">
-            <div className="flex items-center justify-between border-b bg-primary-foreground/50 px-4 py-2">
+          <div className="relative mx-auto max-w-3xl overflow-hidden rounded-lg border border-input bg-accent shadow-xl">
+            <div className="flex items-center justify-between border-b bg-card px-4 py-2">
               <div className="flex items-center space-x-2">
-                <Terminal size={18} className="text-accent" />
-                <span className="font-medium text-sm">Natural Commands</span>
+                <Terminal size={18} className="text-secondary-foreground" />
+                <span className="font-medium text-sm text-secondary-foreground">
+                  Natural Commands
+                </span>
               </div>
               <div className="flex space-x-1">
                 <div className="h-3 w-3 rounded-full bg-red-500" />
@@ -52,21 +54,21 @@ export const Hero = () => {
 
             <div className="p-6 text-left font-mono text-sm">
               <div className="mb-4">
-                <span className="text-accent">&gt; </span>
+                <span className="text-primary-foreground">&gt; </span>
                 <TypeAnimation
                   text="Give me an enchanted book with sharpness 5"
                   typingSpeed={20}
                   startDelay={500}
-                  className="text-gray-200"
+                  className="text-primary-foreground"
                 />
               </div>
 
-              <div className="overflow-x-auto rounded-md bg-background/50 p-3 text-gray-300">
+              <div className="overflow-x-auto rounded-md bg-background p-3">
                 <TypeAnimation
                   text="give @s enchanted_book[stored_enchantments={'sharpness':5}] 1"
                   typingSpeed={20}
                   startDelay={1600}
-                  className="text-primary"
+                  className="text-secondary-foreground"
                 />
               </div>
             </div>
