@@ -14,8 +14,8 @@ import io.ktor.http.contentType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -101,15 +101,42 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
                 if (choice != null) {
                     val generatedCommand = choice.message.content
 
+                    val command =
+                        ClickEvent.clickEvent(
+                            ClickEvent.Action.SUGGEST_COMMAND,
+                            "/${generatedCommand}",
+                        )
+
                     val message =
-                        MiniMessage.miniMessage()
-                            .deserialize(
-                                listOf(
-                                        "<gold>The following command has been generated for you</gold>",
-                                        "<aqua><insert:/${generatedCommand}>${generatedCommand}</insert></aqua>",
-                                        "<gold>Click the command above to run</gold>",
-                                    )
-                                    .joinToString("<newline>")
+                        Component.text("------------=[ ", NamedTextColor.DARK_GRAY)
+                            .append(Component.text("Natural Commands", NamedTextColor.GRAY))
+                            .append(Component.text(" ]=------------", NamedTextColor.DARK_GRAY))
+                            .append(Component.newline())
+                            .append(
+                                Component.text(
+                                    "The following command has been generated for you",
+                                    NamedTextColor.GOLD,
+                                )
+                            )
+                            .append(Component.newline())
+                            .append(
+                                Component.text("/${generatedCommand}")
+                                    .clickEvent(command)
+                                    .color(NamedTextColor.AQUA)
+                            )
+                            .append(Component.newline())
+                            .append(
+                                Component.text(
+                                    "Click the command above to run",
+                                    NamedTextColor.GOLD,
+                                )
+                            )
+                            .append(Component.newline())
+                            .append(
+                                Component.text(
+                                    "--------------------------------------------",
+                                    NamedTextColor.DARK_GRAY,
+                                )
                             )
 
                     player.sendMessage(message)
