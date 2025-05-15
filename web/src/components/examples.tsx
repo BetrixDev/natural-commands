@@ -6,8 +6,7 @@ import { CodeExample } from "./code-example";
 const examples = [
   {
     input: "Summon a donkey with a saddle and name him My cool donkey",
-    output:
-      '/summon donkey ~ ~1 ~ {SaddleItem:{id:saddle,Count:1},CustomName:"My cool donkey"}',
+    output: '/summon donkey ~ ~1 ~ {SaddleItem:{id:saddle,Count:1},CustomName:"My cool donkey"}',
   },
   {
     input:
@@ -27,12 +26,10 @@ export const Examples = () => {
   return (
     <section id="examples" className="py-16">
       <div className="mb-12 text-center">
-        <h2 className="mb-4 font-bold text-3xl md:text-4xl">
-          See It In Action
-        </h2>
+        <h2 className="mb-4 font-bold text-3xl md:text-4xl">See It In Action</h2>
         <p className="mx-auto max-w-3xl text-secondary-foreground text-xl">
-          Type what you want to do in plain English, and Natural Commands
-          instantly generates the perfect command.
+          Type what you want to do in plain English, and Natural Commands instantly generates the
+          perfect command.
         </p>
       </div>
 

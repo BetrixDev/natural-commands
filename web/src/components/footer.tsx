@@ -131,8 +131,8 @@ export const Footer = () => {
       <div className="mt-12 border-input border-t pt-8 text-center text-muted-foreground text-sm">
         <p>© {new Date().getFullYear()} Natural Commands.</p>
         <p className="mt-2">
-          Not affiliated with Mojang Studios or Microsoft. Minecraft is a
-          trademark of Mojang Studios.
+          Not affiliated with Mojang Studios or Microsoft. Minecraft is a trademark of Mojang
+          Studios.
         </p>
       </div>
     </footer>

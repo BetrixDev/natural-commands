@@ -6,12 +6,16 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
-    "test": "turbo test"
+    "test": "turbo test",
+    "format:js": "biome format --write .",
+    "format:kt": "java -jar ktfmt.jar --kotlinlang-style plugin/src/**",
+    "format": "pnpm run format:js && pnpm run format:kt"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "turbo": "^2.5.3"
   },
   "packageManager": "pnpm@9.1.0"

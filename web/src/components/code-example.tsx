@@ -18,16 +18,10 @@ export const CodeExample = ({ input, output }: CodeExampleProps) => {
   return (
     <div>
       <div className="mb-6">
-        <h4 className="mb-2 font-medium text-muted-foreground text-sm">
-          You Type:
-        </h4>
+        <h4 className="mb-2 font-medium text-muted-foreground text-sm">You Type:</h4>
         <div className="rounded-md border border-input bg-secondary p-4 font-mono text-sm">
           {isAnimating ? (
-            <TypeAnimation
-              text={input}
-              typingSpeed={10}
-              className="text-primary"
-            />
+            <TypeAnimation text={input} typingSpeed={10} className="text-primary" />
           ) : (
             <span className="text-primary">{input}</span>
           )}
@@ -47,9 +41,7 @@ export const CodeExample = ({ input, output }: CodeExampleProps) => {
               className="text-primary"
             />
           ) : (
-            <span className="whitespace-pre-wrap text-primary-foreground">
-              {output}
-            </span>
+            <span className="whitespace-pre-wrap text-primary-foreground">{output}</span>
           )}
         </div>
       </div>

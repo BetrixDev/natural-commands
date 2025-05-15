@@ -48,12 +48,10 @@ export const Benefits = () => {
   return (
     <section id="benefits" className="bg-card py-16">
       <div className="mb-12 text-center">
-        <h2 className="mb-4 font-bold text-3xl md:text-4xl">
-          Why use Natural Commands?
-        </h2>
+        <h2 className="mb-4 font-bold text-3xl md:text-4xl">Why use Natural Commands?</h2>
         <p className="mx-auto max-w-3xl text-muted-foreground text-xl">
-          Our plugin revolutionizes how you interact with Minecraft, making
-          complex commands accessible to everyone.
+          Our plugin revolutionizes how you interact with Minecraft, making complex commands
+          accessible to everyone.
         </p>
       </div>
 

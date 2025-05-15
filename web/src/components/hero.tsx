@@ -16,10 +16,9 @@ export const Hero = () => {
             </h1>
 
             <p className="mb-8 text-muted-foreground text-md leading-relaxed md:text-lg">
-              Natural Commands transforms your plain English into complex
-              Minecraft commands instantly. Powered by advanced AI, it
-              understands what you want to do and generates the right commands
-              for you.
+              Natural Commands transforms your plain English into complex Minecraft commands
+              instantly. Powered by advanced AI, it understands what you want to do and generates
+              the right commands for you.
             </p>
 
             <div className="mb-12 flex flex-col justify-center gap-4 sm:flex-row">
@@ -28,10 +27,7 @@ export const Hero = () => {
                   Get Started
                 </Link>
               </Button>
-              <Button
-                variant="secondary"
-                className="h-12 px-8 font-semibold text-lg"
-              >
+              <Button variant="secondary" className="h-12 px-8 font-semibold text-lg">
                 <a href="#examples">See Examples</a>
               </Button>
             </div>

@@ -19,21 +19,21 @@ class NaturalCommands : SuspendingJavaPlugin() {
 
     @OptIn(ExperimentalSerializationApi::class)
     val apiClient =
-            HttpClient(CIO) {
-                install(ContentNegotiation) {
-                    json(
-                            Json {
-                                isLenient = true
-                                ignoreUnknownKeys = true
-                                namingStrategy = JsonNamingStrategy.SnakeCase
-                            }
-                    )
-                }
-                install(Logging) {
-                    logger = Logger.DEFAULT
-                    level = LogLevel.ALL
-                }
+        HttpClient(CIO) {
+            install(ContentNegotiation) {
+                json(
+                    Json {
+                        isLenient = true
+                        ignoreUnknownKeys = true
+                        namingStrategy = JsonNamingStrategy.SnakeCase
+                    }
+                )
             }
+            install(Logging) {
+                logger = Logger.DEFAULT
+                level = LogLevel.ALL
+            }
+        }
 
     override fun onEnable() {
         saveDefaultConfig()

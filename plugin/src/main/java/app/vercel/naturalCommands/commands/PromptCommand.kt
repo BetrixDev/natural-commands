@@ -20,12 +20,12 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-class PromptCommand(private val plugin: NaturalCommands): SuspendingCommandExecutor {
+class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExecutor {
     override suspend fun onCommand(
         sender: CommandSender,
         command: Command,
         label: String,
-        args: Array<out String>
+        args: Array<out String>,
     ): Boolean {
         val player = sender
 
@@ -41,13 +41,22 @@ class PromptCommand(private val plugin: NaturalCommands): SuspendingCommandExecu
         val userPrompt = args.joinToString("")
 
         withContext(Dispatchers.IO) {
-            val response = plugin.apiClient.post("https://openrouter.ai/api/v1/chat/completions") {
-                header("Authorization", "Bearer ${plugin.config.getString("open-router-token")}")
-                header("HTTP-Referer", "https://natural-commands.vercel.app")
-                header("X-Title", "Natural Commands")
-                contentType(ContentType.Application.Json)
-                setBody(ChatCompletionsRequest("google/gemini-2.5-flash-preview", listOf(
-                    ChatCompletionsMessage("system", """
+            val response =
+                plugin.apiClient.post("https://openrouter.ai/api/v1/chat/completions") {
+                    header(
+                        "Authorization",
+                        "Bearer ${plugin.config.getString("open-router-token")}",
+                    )
+                    header("HTTP-Referer", "https://natural-commands.vercel.app")
+                    header("X-Title", "Natural Commands")
+                    contentType(ContentType.Application.Json)
+                    setBody(
+                        ChatCompletionsRequest(
+                            "google/gemini-2.5-flash-preview",
+                            listOf(
+                                ChatCompletionsMessage(
+                                    "system",
+                                    """
                                     You are an AI specialized in generating Minecraft: Java Edition commands.
                                     Your primary function is to translate user requests from plain English into valid Minecraft commands.
 
@@ -75,9 +84,14 @@ class PromptCommand(private val plugin: NaturalCommands): SuspendingCommandExecu
                                     - Do not break the command on to multiple lines.
 
                                     Remember, your goal is to provide precise, executable Minecraft commands that exactly match the user's specifications.
-                                """.trimIndent()),
-                    ChatCompletionsMessage("user", userPrompt))))
-            }
+                                """
+                                        .trimIndent(),
+                                ),
+                                ChatCompletionsMessage("user", userPrompt),
+                            ),
+                        )
+                    )
+                }
 
             if (response.status.value in 200..299) {
                 val responseBody: ChatCompletionsResponse = response.body()
@@ -87,13 +101,18 @@ class PromptCommand(private val plugin: NaturalCommands): SuspendingCommandExecu
                 if (choice != null) {
                     val generatedCommand = choice.message.content
 
-                    val message = MiniMessage.miniMessage().deserialize(listOf(
-                        "<gold>The following command has been generated for you</gold>",
-                        "<aqua><insert:/${generatedCommand}>${generatedCommand}</insert></aqua>",
-                        "<gold>Click the command above to run</gold>"
-                    ).joinToString("<newline>"))
+                    val message =
+                        MiniMessage.miniMessage()
+                            .deserialize(
+                                listOf(
+                                        "<gold>The following command has been generated for you</gold>",
+                                        "<aqua><insert:/${generatedCommand}>${generatedCommand}</insert></aqua>",
+                                        "<gold>Click the command above to run</gold>",
+                                    )
+                                    .joinToString("<newline>")
+                            )
 
-                    player.sendMessage(message);
+                    player.sendMessage(message)
                 } else {
                     player.sendPlainMessage("Something went wrong with AI response")
                 }
