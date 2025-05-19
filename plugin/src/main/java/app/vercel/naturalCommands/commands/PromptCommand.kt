@@ -15,7 +15,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
+import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -45,14 +47,14 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
                 plugin.apiClient.post("https://openrouter.ai/api/v1/chat/completions") {
                     header(
                         "Authorization",
-                        "Bearer ${plugin.config.getString("open-router-token")}",
+                        "Bearer ${plugin.config.getString("open_router_token")}",
                     )
                     header("HTTP-Referer", "https://natural-commands.vercel.app")
                     header("X-Title", "Natural Commands")
                     contentType(ContentType.Application.Json)
                     setBody(
                         ChatCompletionsRequest(
-                            "google/gemini-2.5-flash-preview",
+                            plugin.config.getString("open_router_model")!!,
                             listOf(
                                 ChatCompletionsMessage(
                                     "system",
@@ -100,44 +102,42 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
 
                 if (choice != null) {
                     val generatedCommand = choice.message.content
-
-                    val command =
-                        ClickEvent.clickEvent(
-                            ClickEvent.Action.SUGGEST_COMMAND,
-                            "/${generatedCommand}",
-                        )
-
+                    val separator = Component.text("----------------------", NamedTextColor.GRAY)
                     val message =
-                        Component.text("------------=[ ", NamedTextColor.DARK_GRAY)
-                            .append(Component.text("Natural Commands", NamedTextColor.GRAY))
-                            .append(Component.text(" ]=------------", NamedTextColor.DARK_GRAY))
+                        Component.text()
+                            .append(separator)
                             .append(Component.newline())
                             .append(
                                 Component.text(
-                                    "The following command has been generated for you",
+                                    "✨ Natural Commands ✨",
                                     NamedTextColor.GOLD,
+                                    TextDecoration.BOLD,
                                 )
                             )
+                            .append(Component.newline())
+                            .append(Component.text("Generated command:", NamedTextColor.YELLOW))
                             .append(Component.newline())
                             .append(
                                 Component.text("/${generatedCommand}")
-                                    .clickEvent(command)
                                     .color(NamedTextColor.AQUA)
+                                    .clickEvent(
+                                        ClickEvent.clickEvent(
+                                            ClickEvent.Action.SUGGEST_COMMAND,
+                                            "/${generatedCommand}",
+                                        )
+                                    )
+                                    .hoverEvent(HoverEvent.showText(Component.text("Click to run")))
                             )
                             .append(Component.newline())
+                            .append(Component.text("➥ ", NamedTextColor.GRAY))
                             .append(
-                                Component.text(
-                                    "Click the command above to run",
-                                    NamedTextColor.GOLD,
-                                )
+                                Component.text("Click to execute")
+                                    .color(NamedTextColor.GREEN)
+                                    .decorate(TextDecoration.ITALIC)
                             )
                             .append(Component.newline())
-                            .append(
-                                Component.text(
-                                    "--------------------------------------------",
-                                    NamedTextColor.DARK_GRAY,
-                                )
-                            )
+                            .append(separator)
+                            .build()
 
                     player.sendMessage(message)
                 } else {

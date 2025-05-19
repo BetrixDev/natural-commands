@@ -1,1 +1,6 @@
-open-router-token: "YOUR_TOKEN_HERE"
+# https://openrouter.ai/docs/api-reference/authentication#using-an-api-key
+open_router_token: "YOUR_TOKEN_HERE"
+
+# https://openrouter.ai/models
+# google/gemini-2.5-flash-preview
+open_router_model: "google/gemini-2.5-flash-preview"
