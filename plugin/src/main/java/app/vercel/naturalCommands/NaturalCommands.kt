@@ -1,6 +1,7 @@
 package app.vercel.naturalCommands
 
 import app.vercel.naturalCommands.commands.ConfirmCommand
+import app.vercel.naturalCommands.commands.FollowUpCommand
 import app.vercel.naturalCommands.commands.PromptCommand
 import com.github.shynixn.mccoroutine.bukkit.SuspendingJavaPlugin
 import com.github.shynixn.mccoroutine.bukkit.setSuspendingExecutor
@@ -48,6 +49,9 @@ class NaturalCommands : SuspendingJavaPlugin() {
 
         val confirmCommand = ConfirmCommand(promptCommand)
         getCommand("ncconfirm")?.setSuspendingExecutor(confirmCommand)
+        
+        val followUpCommand = FollowUpCommand(promptCommand)
+        getCommand("ncfollowup")?.setSuspendingExecutor(followUpCommand)
     }
 
     override fun onDisable() {

@@ -15,6 +15,10 @@ commands:
     description: Confirm and execute a long command
     usage: /<command>
     permission: naturalcommands.prompt
+  ncfollowup:
+    description: Follow up on a previous command with more details
+    usage: /<command>
+    permission: naturalcommands.prompt
 permissions:
   naturalcommands.prompt:
     description: Allows using the prompt command

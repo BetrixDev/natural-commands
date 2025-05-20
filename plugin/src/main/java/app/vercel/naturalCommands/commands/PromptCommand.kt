@@ -30,7 +30,15 @@ import java.time.Duration
 
 class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExecutor {
     private data class PendingCommand(val command: String, val timestamp: Instant, val originalPrompt: String)
+    private data class ConversationContext(
+        val messages: MutableList<ChatCompletionsMessage>,
+        val timestamp: Instant,
+        val lastGeneratedCommand: String = ""
+    )
+    
     private val pendingCommands = ConcurrentHashMap<UUID, PendingCommand>()
+    private val pendingFollowUps = ConcurrentHashMap<UUID, String>()
+    private val conversationContexts = ConcurrentHashMap<UUID, ConversationContext>()
 
     init {
         plugin.launch {
@@ -38,6 +46,18 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
                 val now = Instant.now()
                 pendingCommands.entries.removeIf { (_, command) ->
                     Duration.between(command.timestamp, now).toMinutes() >= 10
+                }
+                
+                pendingFollowUps.entries.removeIf { (playerUUID, _) ->
+                    // Remove follow-up state after 10 minutes
+                    Duration.between(
+                        conversationContexts[playerUUID]?.timestamp ?: Instant.EPOCH,
+                        now
+                    ).toMinutes() >= 10
+                }
+                
+                conversationContexts.entries.removeIf { (_, context) ->
+                    Duration.between(context.timestamp, now).toMinutes() >= 30
                 }
 
                 delay(10 * 60 * 1000)
@@ -59,8 +79,23 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
         }
 
         val userPrompt = args.joinToString(" ")
-
+        val isFollowUp = pendingFollowUps.remove(sender.uniqueId) != null
+        
         withContext(Dispatchers.IO) {
+            val messages = if (isFollowUp) {
+                val context = conversationContexts[sender.uniqueId]
+                if (context != null) {
+                    // Add the follow-up prompt to the conversation
+                    context.messages.add(ChatCompletionsMessage("user", "I wasn't satisfied with that command. " +
+                            "Here's my follow-up prompt: $userPrompt\n\nPlease generate a better command."))
+                    context.messages
+                } else {
+                    createNewConversation(sender, userPrompt)
+                }
+            } else {
+                createNewConversation(sender, userPrompt)
+            }
+            
             val response =
                 plugin.apiClient.post("https://openrouter.ai/api/v1/chat/completions") {
                     header(
@@ -73,18 +108,24 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
                     setBody(
                         ChatCompletionsRequest(
                             plugin.config.getString("open_router_model")!!,
-                            listOf(
-                                ChatCompletionsMessage("system", getSystemPrompt(sender)),
-                                ChatCompletionsMessage("user", userPrompt),
-                            ),
+                            messages
                         )
                     )
                 }
 
-            handleApiResponse(response, sender, userPrompt)
+            handleApiResponse(response, sender, userPrompt, isFollowUp)
         }
 
         return true
+    }
+    
+    private fun createNewConversation(player: Player, userPrompt: String): MutableList<ChatCompletionsMessage> {
+        val messages = mutableListOf(
+            ChatCompletionsMessage("system", getSystemPrompt(player)),
+            ChatCompletionsMessage("user", userPrompt)
+        )
+        conversationContexts[player.uniqueId] = ConversationContext(messages, Instant.now())
+        return messages
     }
 
     private fun getSystemPrompt(player: Player): String {
@@ -134,9 +175,9 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
             .trimIndent()
     }
 
-    private fun sendCommandMessage(player: Player, generatedCommand: String, originalPrompt: String) {
+    private fun sendCommandMessage(player: Player, generatedCommand: String, originalPrompt: String, isFollowUp: Boolean) {
         val isLongCommand = generatedCommand.length > 256
-        val message = buildCommandMessage(generatedCommand, isLongCommand, originalPrompt)
+        val message = buildCommandMessage(generatedCommand, isLongCommand, originalPrompt, isFollowUp)
 
         if (isLongCommand) {
             storePendingCommand(player, generatedCommand, originalPrompt)
@@ -149,9 +190,24 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
         }
 
         player.sendMessage(message)
+        
+        // Update the conversation context with the AI's response
+        val context = conversationContexts[player.uniqueId]
+        if (context != null) {
+            context.messages.add(ChatCompletionsMessage("assistant", generatedCommand))
+            conversationContexts[player.uniqueId] = context.copy(
+                timestamp = Instant.now(),
+                lastGeneratedCommand = generatedCommand
+            )
+        }
     }
 
-    private fun buildCommandMessage(generatedCommand: String, isLongCommand: Boolean, originalPrompt: String): Component {
+    private fun buildCommandMessage(
+        generatedCommand: String, 
+        isLongCommand: Boolean, 
+        originalPrompt: String,
+        isFollowUp: Boolean
+    ): Component {
         return Component.text()
             .append(Component.text("----------------------", NamedTextColor.GRAY))
             .append(Component.newline())
@@ -193,6 +249,24 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
                     .decorate(TextDecoration.ITALIC)
             )
             .append(Component.newline())
+            .append(Component.newline())
+            .append(
+                Component.text("Not what you wanted? ")
+                    .color(NamedTextColor.YELLOW)
+            )
+            .append(
+                Component.text("Follow up")
+                    .color(NamedTextColor.GOLD)
+                    .decorate(TextDecoration.BOLD)
+                    .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/ncfollowup"))
+                    .hoverEvent(
+                        HoverEvent.showText(
+                            Component.text("Click to provide additional details")
+                                .color(NamedTextColor.WHITE)
+                        )
+                    )
+            )
+            .append(Component.newline())
             .append(Component.text("----------------------", NamedTextColor.GRAY))
             .build()
     }
@@ -204,7 +278,8 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
     private suspend fun handleApiResponse(
         response: io.ktor.client.statement.HttpResponse,
         player: Player,
-        originalPrompt: String
+        originalPrompt: String,
+        isFollowUp: Boolean
     ) {
         if (response.status.value in 200..299) {
             val responseBody: ChatCompletionsResponse = response.body()
@@ -213,7 +288,7 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
 
             if (choice != null) {
                 val generatedCommand = choice.message.content
-                sendCommandMessage(player, generatedCommand, originalPrompt)
+                sendCommandMessage(player, generatedCommand, originalPrompt, isFollowUp)
             } else {
                 player.sendMessage(
                     Component.text("Something went wrong with AI response")
@@ -237,5 +312,58 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
             )
             false
         }
+    }
+    
+    fun startFollowUp(player: Player): Boolean {
+        val context = conversationContexts[player.uniqueId]
+        if (context == null || context.lastGeneratedCommand.isEmpty()) {
+            player.sendMessage(
+                Component.text("No previous command to follow up on!")
+                    .color(NamedTextColor.RED)
+            )
+            return false
+        }
+        
+        pendingFollowUps[player.uniqueId] = context.lastGeneratedCommand
+        
+        player.sendMessage(
+            Component.text()
+                .append(Component.text("----------------------", NamedTextColor.GRAY))
+                .append(Component.newline())
+                .append(Component.text("✨ Follow-up Mode ✨", NamedTextColor.GOLD, TextDecoration.BOLD))
+                .append(Component.newline())
+                .append(Component.text("Original prompt: ", NamedTextColor.YELLOW))
+                .append(Component.text(context.messages.find { it.role == "user" }?.content ?: "", NamedTextColor.WHITE))
+                .append(Component.newline())
+                .append(Component.text("Previous command: ", NamedTextColor.YELLOW))
+                .append(Component.text("/" + context.lastGeneratedCommand, NamedTextColor.AQUA))
+                .append(Component.newline())
+                .append(Component.newline())
+                .append(Component.text("Provide your additional details:", NamedTextColor.GREEN, TextDecoration.BOLD))
+                .append(Component.newline())
+                .append(Component.text("➥ ", NamedTextColor.GRAY))
+                .append(
+                    Component.text("Click here to start typing")
+                        .color(NamedTextColor.GREEN)
+                        .decorate(TextDecoration.ITALIC)
+                        .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/nc "))
+                        .hoverEvent(
+                            HoverEvent.showText(
+                                Component.text("Clicking will open chat with /nc ")
+                                    .color(NamedTextColor.WHITE)
+                            )
+                        )
+                )
+                .append(Component.newline())
+                .append(Component.text("Example: ", NamedTextColor.GRAY))
+                .append(Component.text("/nc make it more powerful", NamedTextColor.AQUA, TextDecoration.ITALIC))
+                .append(Component.newline())
+                .append(Component.text("The AI will consider both requests together", NamedTextColor.YELLOW))
+                .append(Component.newline())
+                .append(Component.text("----------------------", NamedTextColor.GRAY))
+                .build()
+        )
+        
+        return true
     }
 }
