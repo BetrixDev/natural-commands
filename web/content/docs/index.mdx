@@ -1,13 +1,71 @@
 ---
-title: Hello World
-description: Your first document
+title: Getting Started
+description: Getting Started with Natural Commands
 ---
 
-Welcome to the docs! You can start writing documents in `/content/docs`.
+import { InlineTOC } from "fumadocs-ui/components/inline-toc";
 
-## What is Next?
+<InlineTOC items={toc} />
+
+## Prerequisites
+
+- A Minecraft server running Paper (or compatible fork)
+- An OpenRouter API key
+- Java 17 or higher
+
+## Installation
+
+1. Download the latest version of Natural Commands from the releases page
+2. Place the plugin JAR file in your server's `plugins` directory
+3. Start or restart your server
+
+## Configuration
+
+The plugin requires configuration of your OpenRouter API key and model selection. Here's how to set it up:
+
+1. Navigate to your server's `plugins/NaturalCommands` directory
+2. Open the `config.yml` file
+3. Configure the following settings:
+
+```yaml
+# Your OpenRouter API key
+open_router_token: "your-api-key-here"
+
+# The AI model to use (e.g., "anthropic/claude-3-opus-20240229")
+open_router_model: "your-preferred-model"
+```
+
+For detailed instructions on setting up OpenRouter, see our [OpenRouter Setup Guide](/docs/openrouter).
+
+### Available Models
+
+Natural Commands works with various models available through OpenRouter. Some recommended models include:
+
+- `anthropic/claude-3-opus-20240229`
+- `anthropic/claude-3-sonnet-20240229`
+- `openai/gpt-4-turbo-preview`
+
+## Usage
+
+Once configured, you can use the plugin in-game with the following command:
+
+```
+/prompt <your natural language request>
+```
+
+For example:
+
+- `/prompt give me a diamond sword`
+- `/prompt teleport me to spawn`
+- `/prompt summon a zombie with full diamond armor`
+
+The plugin will generate the appropriate Minecraft command based on your request.
+
+For more detailed information about available commands, see our [Commands Guide](/docs/commands).
+
+## What's Next?
 
 <Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.vercel.app" />
+  <Card title="Commands Guide" href="/docs/commands" />
+  <Card title="OpenRouter Setup Guide" href="/docs/openrouter" />
 </Cards>

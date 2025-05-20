@@ -1,0 +1,71 @@
+---
+title: Prompt Command
+description: Learn how to use the /prompt command to generate Minecraft commands using natural language
+---
+
+import { InlineTOC } from "fumadocs-ui/components/inline-toc";
+
+<InlineTOC items={toc} />
+
+# Prompt Command
+
+The `/prompt` command allows you to generate Minecraft commands using natural language. This powerful feature uses AI to understand your intent and convert it into valid Minecraft commands.
+
+## Usage
+
+```
+/prompt <your prompt>
+```
+
+## Examples
+
+Here are some examples of how to use the prompt command:
+
+### Basic Commands
+
+- `/prompt give me a diamond sword`
+- `/prompt teleport me to spawn`
+- `/prompt set the time to day`
+
+### Complex Commands
+
+- `/prompt summon a zombie with full diamond armor and a sharpness 5 diamond sword`
+- `/prompt create a 5x5x5 cube of diamond blocks at my position`
+- `/prompt give me a stack of golden apples with the name "Healing Fruit"`
+
+### Entity Manipulation
+
+- `/prompt make all zombies invisible`
+- `/prompt give all players 10 levels`
+
+## Tips for Better Results
+
+1. **Be Specific**: The more details you provide, the better the command will be
+
+   - Good: `/prompt give me a diamond sword with sharpness 5 and unbreaking 3`
+   - Less Good: `/prompt give me a sword`
+
+2. **Use Natural Language**: Write your request as you would say it
+
+   - Good: `/prompt make it rain for 5 minutes`
+   - Less Good: `/prompt /weather rain 300`
+
+3. **Break Down Complex Requests**: For very complex commands, try breaking them into steps
+   - Instead of: `/prompt create a castle with towers and a moat`
+   - Try: `/prompt create a 20x20 stone platform` then `/prompt build 4 stone towers at the corners`
+
+## Limitations
+
+- The command can only generate one command at a time
+- Some very complex requests might not be possible with a single command
+- The AI might not always understand highly technical or game-specific terminology
+- Commands are limited to what's possible in the current Minecraft version
+
+## Troubleshooting
+
+If the generated command doesn't work as expected:
+
+1. Try rephrasing your request to be more specific
+2. Break down complex requests into simpler steps
+3. Check if the command is valid for your Minecraft version
+4. Ensure you have the necessary permissions to execute the command

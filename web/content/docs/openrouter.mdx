@@ -1,0 +1,72 @@
+---
+title: OpenRouter Setup Guide
+description: How to set up OpenRouter for Natural Commands
+---
+
+import { InlineTOC } from "fumadocs-ui/components/inline-toc";
+
+<InlineTOC items={toc} />
+
+## OpenRouter Setup Guide
+
+This guide will walk you through setting up OpenRouter for use with Natural Commands.
+
+## What is OpenRouter?
+
+[OpenRouter](https://openrouter.ai/) is a unified API that provides access to various AI models from different providers. It allows you to use models from Anthropic, OpenAI, and other providers through a single API.
+
+## Getting Started
+
+### 1. Create an Account
+
+1. Visit [OpenRouter](https://openrouter.ai/)
+2. Click "Sign Up" or "Get Started"
+3. Create an account using your email or GitHub
+
+### 2. Get Your API Key
+
+1. After signing in, navigate to the [API Keys](https://openrouter.ai/keys) section
+2. Click "Create Key"
+3. Give your key a descriptive name (e.g., "Natural Commands")
+4. Copy the generated API key
+
+### 3. Configure Natural Commands
+
+1. Open your server's `plugins/NaturalCommands/config.yml` file
+2. Paste your API key into the `open_router_token` field:
+
+```yaml
+open_router_token: "your-api-key-here"
+```
+
+## Available Models
+
+OpenRouter provides access to various AI models. Here are some recommended models for Natural Commands. View them [here](https://openrouter.ai/models). To select a model, click on the clipboard icon to copy the model's id.
+
+## Model Selection
+
+To change the model used by Natural Commands:
+
+1. Open your `config.yml` file
+2. Update the `open_router_model` field with your preferred model:
+
+```yaml
+open_router_model: "your-model-id-here"
+```
+
+You can monitor your usage and credits in the [OpenRouter Activity Page](https://openrouter.ai/activity).
+
+## Additional Resources
+
+- [OpenRouter Documentation](https://openrouter.ai/docs)
+- [Model Comparison](https://openrouter.ai/models)
+- [OpenRouter Activity Page](https://openrouter.ai/activity)
+
+## Troubleshooting
+
+If you encounter any issues:
+
+1. Verify your API key is correct in the config file
+2. Check your credit balance in the OpenRouter dashboard
+3. Ensure you're using a supported model
+4. Check the [OpenRouter Status Page](https://status.openrouter.ai/) for any service issues

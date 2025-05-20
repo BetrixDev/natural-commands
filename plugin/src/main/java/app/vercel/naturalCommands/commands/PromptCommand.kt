@@ -86,6 +86,21 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
                                     - Do not break the command on to multiple lines.
 
                                     Remember, your goal is to provide precise, executable Minecraft commands that exactly match the user's specifications.
+
+                                    Example:
+                                    User: summon a zombie with full diamond armor and a sharpness 5 diamond sword
+                                    AI: summon zombie ~ ~1 ~ {PersistenceRequired:1,equipment:{mainhand:{count:1,id:diamond_sword,components:{enchantments:{'sharpness':5}}},head:{count:1,id:diamond_helmet},chest:{count:1,id:diamond_chestplate},legs:{count:1,id:diamond_leggings},feet:{count:1,id:diamond_boots}}}
+
+                                    User: give me a diamond sword
+                                    AI: /give @s diamond_sword
+
+                                    User: set the time to day
+                                    AI: /time set day
+
+                                    User: give me a stack of golden apples with the name "Healing Fruit"
+                                    AI: /give @p golden_apple[custom_name="Healing Fruit"] 64
+                                    
+                                    
                                 """
                                         .trimIndent(),
                                 ),
