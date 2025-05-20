@@ -50,14 +50,26 @@ export async function generateMetadata({
   return {
     title: page.data.title,
     description: page.data.description,
+    authors: {
+      name: "Ryan Bailey",
+      url: "https://github.com/BetrixDev",
+    },
     openGraph: {
       images: image,
       url: `https://natural-commands.vercel.app/docs/${slug.join("/")}`,
       siteName: "Natural Commands",
+      type: "website",
+      locale: "en_US",
     },
     twitter: {
       card: "summary_large_image",
       images: image,
+      creator: "@BetrixDev",
+    },
+    keywords: ["Natural Commands", "Minecraft", "Commands", "AI", "Minecraft Commands"],
+    applicationName: "Natural Commands",
+    other: {
+      license: "MIT",
     },
   } as Metadata;
 }
