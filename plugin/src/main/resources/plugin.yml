@@ -8,5 +8,20 @@ description: Simple Words to Powerful Commands
 website: https://natural-commands.vercel.app
 commands:
   prompt:
-    description: Generate a command with plain English
-    usage: "prompt [userPrompt]"
+    description: Generate a Minecraft command using natural language
+    usage: /<command> <prompt>
+    aliases: [nc, naturalcommands]
+  ncconfirm:
+    description: Confirm and execute a long command
+    usage: /<command>
+    permission: naturalcommands.prompt
+permissions:
+  naturalcommands.prompt:
+    description: Allows using the prompt command
+    default: true
+  naturalcommands.reload:
+    description: Allows reloading the plugin configuration
+    default: op
+  naturalcommands.help:
+    description: Allows using the help command
+    default: true
