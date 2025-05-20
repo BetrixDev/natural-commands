@@ -1,5 +1,6 @@
 import { source } from "@/lib/source";
 import { generateOGImage } from "fumadocs-ui/og";
+import { BotMessageSquareIcon } from "lucide-react";
 import { notFound } from "next/navigation";
 
 export async function GET(_req: Request, { params }: { params: Promise<{ slug: string[] }> }) {
@@ -11,6 +12,9 @@ export async function GET(_req: Request, { params }: { params: Promise<{ slug: s
     title: page.data.title,
     description: page.data.description,
     site: "Natural Commands",
+    icon: <BotMessageSquareIcon />,
+    primaryColor: "#000000",
+    primaryTextColor: "#ffffff",
   });
 }
 
