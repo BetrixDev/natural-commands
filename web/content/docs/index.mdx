@@ -31,7 +31,7 @@ The plugin requires configuration of your OpenRouter API key and model selection
 # Your OpenRouter API key
 open_router_token: "your-api-key-here"
 
-# The AI model to use (e.g., "anthropic/claude-3-opus-20240229")
+# The AI model to use (e.g., "google/gemini-2.5-flash-preview")
 open_router_model: "your-preferred-model"
 ```
 
@@ -41,9 +41,9 @@ For detailed instructions on setting up OpenRouter, see our [OpenRouter Setup Gu
 
 Natural Commands works with various models available through OpenRouter. Some recommended models include:
 
-- `anthropic/claude-3-opus-20240229`
-- `anthropic/claude-3-sonnet-20240229`
-- `openai/gpt-4-turbo-preview`
+- `google/gemini-2.5-flash-preview`
+- `openai/gpt-4o-mini`
+- `anthropic/claude-3.7-sonnet`
 
 ## Usage
 
@@ -62,10 +62,3 @@ For example:
 The plugin will generate the appropriate Minecraft command based on your request.
 
 For more detailed information about available commands, see our [Commands Guide](/docs/commands).
-
-## What's Next?
-
-<Cards>
-  <Card title="Commands Guide" href="/docs/commands" />
-  <Card title="OpenRouter Setup Guide" href="/docs/openrouter" />
-</Cards>
