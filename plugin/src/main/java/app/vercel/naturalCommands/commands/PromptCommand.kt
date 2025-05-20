@@ -29,7 +29,7 @@ import java.time.Instant
 import java.time.Duration
 
 class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExecutor {
-    private data class PendingCommand(val command: String, val timestamp: Instant)
+    private data class PendingCommand(val command: String, val timestamp: Instant, val originalPrompt: String)
     private val pendingCommands = ConcurrentHashMap<UUID, PendingCommand>()
 
     init {
@@ -81,7 +81,7 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
                     )
                 }
 
-            handleApiResponse(response, sender)
+            handleApiResponse(response, sender, userPrompt)
         }
 
         return true
@@ -114,6 +114,7 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
             - If multiple approaches exist, choose the most straightforward and reliable method.
             - Ensure you are using the correct syntax when a command is using NBT data / extra data for entities, etc.
             - Do not break the command on to multiple lines.
+            - Ensure the correct casing is used for commands and NBT data.
 
             Remember, your goal is to provide precise, executable Minecraft commands that exactly match the user's specifications.
 
@@ -133,38 +134,16 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
             .trimIndent()
     }
 
-    private suspend fun handleApiResponse(
-        response: io.ktor.client.statement.HttpResponse,
-        player: Player,
-    ) {
-        if (response.status.value in 200..299) {
-            val responseBody: ChatCompletionsResponse = response.body()
-            val choice = responseBody.choices.find { it.finishReason == "stop" }
-
-            if (choice != null) {
-                val generatedCommand = choice.message.content
-                sendCommandMessage(player, generatedCommand)
-            } else {
-                player.sendMessage(
-                    Component.text("Something went wrong with AI response")
-                        .color(NamedTextColor.RED)
-                )
-            }
-        } else {
-            player.sendMessage(Component.text("Something went wrong!").color(NamedTextColor.RED))
-        }
-    }
-
-    private fun sendCommandMessage(player: Player, generatedCommand: String) {
+    private fun sendCommandMessage(player: Player, generatedCommand: String, originalPrompt: String) {
         val isLongCommand = generatedCommand.length > 256
-        val message = buildCommandMessage(generatedCommand, isLongCommand)
+        val message = buildCommandMessage(generatedCommand, isLongCommand, originalPrompt)
 
         if (isLongCommand) {
-            storePendingCommand(player, generatedCommand)
+            storePendingCommand(player, generatedCommand, originalPrompt)
             player.sendMessage(
                 Component.text(
-                        "This command is too long to execute directly. Click the command above to execute it via the server."
-                    )
+                    "This command is too long to execute directly. Click the command above to execute it via the server."
+                )
                     .color(NamedTextColor.YELLOW)
             )
         }
@@ -172,7 +151,7 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
         player.sendMessage(message)
     }
 
-    private fun buildCommandMessage(generatedCommand: String, isLongCommand: Boolean): Component {
+    private fun buildCommandMessage(generatedCommand: String, isLongCommand: Boolean, originalPrompt: String): Component {
         return Component.text()
             .append(Component.text("----------------------", NamedTextColor.GRAY))
             .append(Component.newline())
@@ -197,9 +176,10 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
                     )
                     .hoverEvent(
                         HoverEvent.showText(
-                            Component.text(
-                                if (isLongCommand) "Click to execute via server" else "Click to run"
-                            )
+                            Component.text()
+                                .append(Component.text("Original prompt:\n", NamedTextColor.GRAY))
+                                .append(Component.text(originalPrompt, NamedTextColor.WHITE))
+                                .build()
                         )
                     )
             )
@@ -207,8 +187,8 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
             .append(Component.text("➥ ", NamedTextColor.GRAY))
             .append(
                 Component.text(
-                        if (isLongCommand) "Click to execute via server" else "Click to execute"
-                    )
+                    if (isLongCommand) "Click to execute via server" else "Click to execute"
+                )
                     .color(NamedTextColor.GREEN)
                     .decorate(TextDecoration.ITALIC)
             )
@@ -217,8 +197,32 @@ class PromptCommand(private val plugin: NaturalCommands) : SuspendingCommandExec
             .build()
     }
 
-    private fun storePendingCommand(player: Player, command: String) {
-        pendingCommands[player.uniqueId] = PendingCommand(command, Instant.now())
+    private fun storePendingCommand(player: Player, command: String, originalPrompt: String) {
+        pendingCommands[player.uniqueId] = PendingCommand(command, Instant.now(), originalPrompt)
+    }
+
+    private suspend fun handleApiResponse(
+        response: io.ktor.client.statement.HttpResponse,
+        player: Player,
+        originalPrompt: String
+    ) {
+        if (response.status.value in 200..299) {
+            val responseBody: ChatCompletionsResponse = response.body()
+
+            val choice = responseBody.choices.find { it.finishReason == "stop" }
+
+            if (choice != null) {
+                val generatedCommand = choice.message.content
+                sendCommandMessage(player, generatedCommand, originalPrompt)
+            } else {
+                player.sendMessage(
+                    Component.text("Something went wrong with AI response")
+                        .color(NamedTextColor.RED)
+                )
+            }
+        } else {
+            player.sendMessage(Component.text("Something went wrong!").color(NamedTextColor.RED))
+        }
     }
 
     fun executePendingCommand(player: Player): Boolean {
