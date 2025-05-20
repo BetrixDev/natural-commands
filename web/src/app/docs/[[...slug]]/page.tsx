@@ -2,6 +2,7 @@ import { source } from "@/lib/source";
 import { getMDXComponents } from "@/mdx-components";
 import { createRelativeLink } from "fumadocs-ui/mdx";
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/page";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 export default async function Page(props: {
@@ -51,10 +52,12 @@ export async function generateMetadata({
     description: page.data.description,
     openGraph: {
       images: image,
+      url: `https://natural-commands.vercel.app/docs/${slug.join("/")}`,
+      siteName: "Natural Commands",
     },
     twitter: {
       card: "summary_large_image",
       images: image,
     },
-  };
+  } as Metadata;
 }
